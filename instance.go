@@ -15,6 +15,7 @@ var (
 	scaledownPtr = flag.Bool("scaledown", false, "Scale down execution of image")
 	domainPtr    = flag.String("domain", "", "Domain name of image instance")
 	runlogPtr    = flag.Bool("runlog", false, "View execution log of image instance")
+	showPtr      = flag.Bool("show", false, "Show image instances")
 	pausePtr     = flag.Bool("pause", false, "Stop image instance")
 	resumePtr    = flag.Bool("resume", false, "Start image instance")
 )
@@ -80,6 +81,22 @@ func processInstances(cli middleware.RumpRunCLIInterface) (response string, exec
 		}
 		executed = true
 		response, err = cli.Postit(b, runlogURL)
+	}
+	if *showPtr {
+		image := &Image{}
+		if *namePtr == "" {
+			log.Println("Please provide image name")
+			flag.PrintDefaults()
+			os.Exit(1)
+		}
+		image.Name = *namePtr
+		b, err = json.Marshal(image)
+		if err != nil {
+			log.Println(err)
+			os.Exit(1)
+		}
+		executed = true
+		response, err = cli.Postit(b, showURL)
 	}
 	if *pausePtr {
 		instance := &Instance{}

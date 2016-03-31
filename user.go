@@ -15,9 +15,9 @@ var (
 
 func main() {
 	flag.Parse()
-	if !*newPtr && !*makelogPtr &&
-		!*scaleupPtr && !*scaledownPtr && !*runlogPtr && !*pausePtr && !*resumePtr &&
-		!*savebackupPtr && !*restorebackupPtr &&
+	if !*newPtr && !*displayPtr && !*makelogPtr &&
+		!*scaleupPtr && !*scaledownPtr && !*runlogPtr && !*showPtr && !*pausePtr && !*resumePtr &&
+		!*savebackupPtr && !*restorebackupPtr && !*listbackupsPtr &&
 		!*newresPtr && !*listresPtr &&
 		!*statusPtr && !*versionPtr && !*languagesPtr && !*addonsPtr && !*builtinsPtr {
 		log.Println("Please chose one of available commands")

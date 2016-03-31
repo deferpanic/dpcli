@@ -11,6 +11,7 @@ import (
 var (
 	savebackupPtr    = flag.Bool("savebackup", false, "Save backup of image instance. Must be paused before")
 	restorebackupPtr = flag.Bool("restorebackup", false, "Restore backup for image instance. Must be paused before")
+	listbackupsPtr   = flag.Bool("listbackups", false, "List all image backups")
 )
 
 // processBackups process backup operations
@@ -62,6 +63,10 @@ func processBackups(cli middleware.RumpRunCLIInterface) (response string, execut
 		}
 		executed = true
 		response, err = cli.Postit(b, restorebackupURL)
+	}
+	if *listbackupsPtr {
+		executed = true
+		response, err = cli.Postit(b, listbackupsURL)
 	}
 
 	return response, executed, err

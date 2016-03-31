@@ -16,6 +16,7 @@ var (
 	addonPtr    = flag.String("addon", "", "Addon for image")
 	scriptPtr   = flag.String("script", "script.yml", "Script for image")
 	languagePtr = flag.String("language", "", "Source language of image")
+	displayPtr  = flag.Bool("display", false, "Display all images")
 	makelogPtr  = flag.Bool("makelog", false, "View making log of image")
 )
 
@@ -63,6 +64,10 @@ func processImages(cli middleware.RumpRunCLIInterface) (response string, execute
 		}
 		executed = true
 		response, err = cli.Postit(b, newURL)
+	}
+	if *displayPtr {
+		executed = true
+		response, err = cli.Postit(b, displayURL)
 	}
 	if *makelogPtr {
 		image := &Image{}

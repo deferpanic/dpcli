@@ -10,8 +10,8 @@ const (
 	// imageURL is the url for image management
 	imageURL = APIBase + "/image"
 
-	// processURL is the url for process management
-	processURL = APIBase + "/instance"
+	// instanceURL is the url for instance management
+	instanceURL = APIBase + "/instance"
 
 	// URL is the url for backup management
 	backupURL = APIBase + "/storage"
@@ -25,29 +25,38 @@ const (
 	// newURL is the url to create new rumprun image
 	newURL = imageURL + "/new"
 
+	// displayURL is the url to display all rumprun images
+	displayURL = imageURL + "/display"
+
 	// makelogURL is the url to view making log of rumprun images
 	makelogURL = imageURL + "/makelog"
 
 	// scaleupURL is the url to scale up execution of rumprun image
-	scaleupURL = processURL + "/scaleup"
+	scaleupURL = instanceURL + "/scaleup"
 
 	// scaledownURL is the url to scale down execution of rumprun image
-	scaledownURL = processURL + "/scaledown"
+	scaledownURL = instanceURL + "/scaledown"
 
 	// runlogURL is the url to view execution log of rumprun image
-	runlogURL = processURL + "/log"
+	runlogURL = instanceURL + "/log"
+
+	// showURL is the url to show running rumprun images
+	showURL = instanceURL + "/show"
 
 	// pauseURL is the url to stop existing rumprun image
-	pauseURL = processURL + "/pause"
+	pauseURL = instanceURL + "/pause"
 
 	// resumeURL is the url to start existing rumprun image
-	resumeURL = processURL + "/resume"
+	resumeURL = instanceURL + "/resume"
 
 	// savebackupURL is the url to save a backup for running rumprun image
 	savebackupURL = backupURL + "/save"
 
 	// restorebackupURL is the url to restore a backup for running rumprun image
 	restorebackupURL = backupURL + "/restore"
+
+	// listbackupsURL is the url to list all rumprun image backups
+	listbackupsURL = backupURL + "/list"
 
 	// newresourceURL is the url to add a resource for rumprun image
 	newresourceURL = resourceURL + "/new"
