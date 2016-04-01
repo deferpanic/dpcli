@@ -33,40 +33,29 @@ func main() {
 
 	cli := middleware.NewRumpRunCLIImplementation(*tokenPtr)
 
-	var err error
 	var response string
+	var err error
 
 	executed := false
 	if !executed {
 		response, executed, err = processImages(cli)
-		if err != nil {
-			os.Exit(1)
-		}
 	}
 	if !executed {
 		response, executed, err = processInstances(cli)
-		if err != nil {
-			os.Exit(1)
-		}
 	}
 	if !executed {
 		response, executed, err = processBackups(cli)
-		if err != nil {
-			os.Exit(1)
-		}
 	}
 	if !executed {
 		response, executed, err = processResources(cli)
-		if err != nil {
-			os.Exit(1)
-		}
 	}
 	if !executed {
 		response, executed, err = processSystem(cli)
-		if err != nil {
-			os.Exit(1)
-		}
 	}
 
-	fmt.Println("Command execution result: " + response)
+	if err != nil {
+		fmt.Println("Error details: " + response)
+	} else {
+		fmt.Println("Command execution result: " + response)
+	}
 }
