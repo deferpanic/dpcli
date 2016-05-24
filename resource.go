@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/deferpanic/rumpruncli/middleware"
+	"github.com/deferpanic/dpcli/middleware"
 	"log"
 	"os"
 )

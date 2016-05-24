@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/deferpanic/rumpruncli/middleware"
+	"github.com/deferpanic/dpcli/middleware"
 )
 
 var (
