@@ -15,7 +15,7 @@ var (
 
 func main() {
 	flag.Parse()
-	if !*newPtr && !*displayPtr && !*makelogPtr &&
+	if !*newPtr && !*displayPtr && !*makelogPtr && !*downloadPtr && !*uploadPtr &&
 		!*scaleupPtr && !*scaledownPtr && !*runlogPtr && !*showPtr && !*pausePtr && !*resumePtr &&
 		!*savebackupPtr && !*restorebackupPtr && !*listbackupsPtr &&
 		!*newresPtr && !*listresPtr &&
