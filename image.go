@@ -6,6 +6,7 @@ import (
 	"github.com/deferpanic/dpcli/middleware"
 	"io/ioutil"
 	"log"
+	"net/url"
 	"os"
 )
 
@@ -59,12 +60,9 @@ func processImages(cli middleware.RumpRunCLIInterface) (response string, execute
 				flag.PrintDefaults()
 				os.Exit(1)
 			}
+			image.MakeBin = true
 			if *binaryPtr != "" {
-				image.Data, err = ioutil.ReadFile(*binaryPtr)
-				if err != nil {
-					log.Println(err)
-					os.Exit(1)
-				}
+				image.MakeBin = false
 			}
 		}
 		b, err = json.Marshal(image)
@@ -74,6 +72,18 @@ func processImages(cli middleware.RumpRunCLIInterface) (response string, execute
 		}
 		executed = true
 		response, err = cli.Postit(b, newURL)
+		if err == nil {
+			if *sourcePtr != "" {
+				if *binaryPtr != "" {
+					data, err := ioutil.ReadFile(*binaryPtr)
+					if err != nil {
+						log.Println(err)
+						os.Exit(1)
+					}
+					response, err = cli.Postit(data, putURL+"/"+url.QueryEscape(*namePtr))
+				}
+			}
+		}
 	}
 	if *displayPtr {
 		executed = true
@@ -112,30 +122,23 @@ func processImages(cli middleware.RumpRunCLIInterface) (response string, execute
 		response, err = cli.Postit(b, getURL)
 	}
 	if *uploadPtr {
-		image := &Image{}
 		if *namePtr == "" {
 			log.Println("Please provide image name")
 			flag.PrintDefaults()
 			os.Exit(1)
 		}
-		image.Name = *namePtr
 		if *binaryPtr == "" {
 			log.Println("Please provide path to image binary")
 			flag.PrintDefaults()
 			os.Exit(1)
 		}
-		image.Data, err = ioutil.ReadFile(*binaryPtr)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		b, err = json.Marshal(image)
+		data, err := ioutil.ReadFile(*binaryPtr)
 		if err != nil {
 			log.Println(err)
 			os.Exit(1)
 		}
 		executed = true
-		response, err = cli.Postit(b, putURL)
+		response, err = cli.Postit(data, putURL+"/"+url.QueryEscape(*namePtr))
 	}
 
 	return response, executed, err
