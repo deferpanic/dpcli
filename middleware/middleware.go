@@ -45,7 +45,7 @@ func (c *RumpRunCLIImplementation) Postit(b []byte, url string) (result string, 
 	}()
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(b))
-	req.Header.Set("X-rumprunid", c.Token)
+	req.Header.Set("DP-APIToken", c.Token)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}

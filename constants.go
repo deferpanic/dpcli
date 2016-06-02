@@ -31,6 +31,12 @@ const (
 	// makelogURL is the url to view making log of rumprun images
 	makelogURL = imageURL + "/makelog"
 
+	// getURL is the url to download rumprun image binary
+	getURL = imageURL + "/get"
+
+	// putURL is the url to upload rumprun image binary
+	putURL = imageURL + "/put"
+
 	// scaleupURL is the url to scale up execution of rumprun image
 	scaleupURL = instanceURL + "/scaleup"
 

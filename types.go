@@ -16,6 +16,7 @@ type Image struct {
 	Language string `json:"Language"`
 	Count    int    `json:"Count"`
 	Force    bool   `json:"Force"`
+	MakeBin  bool   `json:"MakeBin"`
 }
 
 // Resource is the base struct for management of resources
