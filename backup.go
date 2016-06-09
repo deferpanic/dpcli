@@ -42,6 +42,7 @@ func processBackups(cli middleware.RumpRunCLIInterface) (response string, execut
 		response, err = cli.Postit(b, savebackupURL)
 
 	}
+
 	if *restorebackupPtr {
 		instance := &Instance{}
 		if *domainPtr == "" {
@@ -64,6 +65,7 @@ func processBackups(cli middleware.RumpRunCLIInterface) (response string, execut
 		executed = true
 		response, err = cli.Postit(b, restorebackupURL)
 	}
+
 	if *listbackupsPtr {
 		executed = true
 		response, err = cli.Postit(b, listbackupsURL)

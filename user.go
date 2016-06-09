@@ -10,7 +10,8 @@ import (
 )
 
 var (
-	tokenPtr = flag.String("token", "", "Token for making API calls. Must be provided")
+	tokenPtr       = flag.String("token", "", "Token for making API calls. Must be provided")
+	interactivePtr = flag.Bool("n", false, "non-interactive mode for scripting")
 )
 
 func main() {
@@ -40,22 +41,32 @@ func main() {
 	if !executed {
 		response, executed, err = processImages(cli)
 	}
+
 	if !executed {
 		response, executed, err = processInstances(cli)
 	}
+
 	if !executed {
 		response, executed, err = processBackups(cli)
 	}
+
 	if !executed {
 		response, executed, err = processResources(cli)
 	}
+
 	if !executed {
 		response, executed, err = processSystem(cli)
 	}
 
-	if err != nil {
-		fmt.Println("Error details: " + response)
+	if !*interactivePtr {
+
+		if err != nil {
+			fmt.Println(redBold(response))
+		} else {
+			fmt.Println(greenBold(response))
+		}
+
 	} else {
-		fmt.Println("Command execution result: " + response)
+		fmt.Println(response)
 	}
 }

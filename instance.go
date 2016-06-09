@@ -48,6 +48,7 @@ func processInstances(cli middleware.RumpRunCLIInterface) (response string, exec
 		executed = true
 		response, err = cli.Postit(b, scaleupURL)
 	}
+
 	if *scaledownPtr {
 		if *namePtr == "" && *domainPtr == "" {
 			log.Println("Please provide image name or image instance domain name")
@@ -66,6 +67,7 @@ func processInstances(cli middleware.RumpRunCLIInterface) (response string, exec
 		executed = true
 		response, err = cli.Postit(b, scaledownURL)
 	}
+
 	if *runlogPtr {
 		instance := &Instance{}
 		if *domainPtr == "" {
@@ -82,6 +84,7 @@ func processInstances(cli middleware.RumpRunCLIInterface) (response string, exec
 		executed = true
 		response, err = cli.Postit(b, runlogURL)
 	}
+
 	if *showPtr {
 		image := &Image{}
 		if *namePtr == "" {
@@ -98,6 +101,7 @@ func processInstances(cli middleware.RumpRunCLIInterface) (response string, exec
 		executed = true
 		response, err = cli.Postit(b, showURL)
 	}
+
 	if *pausePtr {
 		instance := &Instance{}
 		if *domainPtr == "" {
@@ -114,6 +118,7 @@ func processInstances(cli middleware.RumpRunCLIInterface) (response string, exec
 		executed = true
 		response, err = cli.Postit(b, pauseURL)
 	}
+
 	if *resumePtr {
 		instance := &Instance{}
 		if *domainPtr == "" {
