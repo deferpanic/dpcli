@@ -133,9 +133,15 @@ To see the available addons:
 
 
 [Php with Redis](https://github.com/vsukhin/phprumpredis)
+
 [Php with Mysql](https://github.com/vsukhin/phprumpmysql)
+
 [Ruby and Sinatra](https://github.com/vsukhin/rubysinatrarump)
+
 [Node Js](https://github.com/vsukhin/nodejsrump)
+
 [Go](https://github.com/vsukhin/gorump)
+
 [Go with DeferPanic client](https://github.com/vsukhin/dpexample)
+
 [Php](https://github.com/vsukhin/phprump)
