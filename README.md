@@ -13,10 +13,14 @@ go build
 
 ## Projects
 
-### Create
+### Create from Repository
 ```
 ./dpcli -new -token TOKEN -name bob -language php \
   -source https://github.com/vsukhin/phprump
+```
+
+### Create from Image Binary
+```
 ```
 
 ### List
@@ -35,13 +39,44 @@ go build
 
 ### Create
 
-### Show
+```
+./dpcli -token TOKEN -name bob -scaleup
+```
 
-### List
+### Log of Individual Instance
+```
+./dpcli -token TOKEN -runlog -domain robert-oklahoma
+```
+
+### List of Instances attached to Image/Project
+
+```
+./dpcli -token TOKEN -show -name bob
+```
 
 ### Pause
 
+```
+./dpcli -token TOKEN -pause -domain robert-oklahoma
+```
+
 ### Resume
+
+```
+./dpcli -token TOKEN -resume -domain robert-oklahoma
+```
+
+### ScaleUp
+
+```
+./dpcli -token TOKEN -name bob -scaleup
+```
+
+### ScaleDown
+
+```
+./dpcli -token TOKEN -name bob -scaledown
+```
 
 ## Volumes
 
@@ -52,6 +87,10 @@ go build
 ### Restore
 
 ### List
+
+```
+./dpcli -token TOKEN -listbackups
+```
 
 ## Languages
 
@@ -81,8 +120,14 @@ To see the available addons:
 
 ## Status
 ```
-./dpcli status
+./dpcli -status
 ```
+
+## Version
+```
+./dpcli -version
+```
+
 
 ## Examples
 
