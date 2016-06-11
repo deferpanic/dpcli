@@ -6,6 +6,9 @@ Then you can find your API token @ https://deferpanic.net/home/settings
 . Replace all occurences of TOKEN with your token in the examples
 provided below.
 
+You can either pass your token in with the -token flag or you maybe
+stick it in ~/.dprc.
+
 ## Build
 ```
 go build
