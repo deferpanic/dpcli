@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/deferpanic/dpcli/middleware"
+	"io/ioutil"
 	"log"
 	"os"
 )
@@ -15,7 +16,16 @@ var (
 )
 
 func main() {
+	var err error
+
 	flag.Parse()
+
+	dat, err := ioutil.ReadFile(os.Getenv("HOME") + "/.dprc")
+	if err != nil {
+		fmt.Println(err)
+	}
+	token := string(dat)
+
 	if !*newPtr && !*displayPtr && !*makelogPtr && !*downloadPtr && !*uploadPtr &&
 		!*scaleupPtr && !*scaledownPtr && !*runlogPtr && !*showPtr && !*pausePtr && !*resumePtr &&
 		!*savebackupPtr && !*restorebackupPtr && !*listbackupsPtr &&
@@ -26,16 +36,19 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *tokenPtr == "" && !(*statusPtr || *versionPtr || *languagesPtr || *addonsPtr || *builtinsPtr) {
+	if token == "" {
+		token = *tokenPtr
+	}
+
+	if token == "" && !(*statusPtr || *versionPtr || *languagesPtr || *addonsPtr || *builtinsPtr) {
 		log.Println("Please provide API token")
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 
-	cli := middleware.NewRumpRunCLIImplementation(*tokenPtr)
+	cli := middleware.NewRumpRunCLIImplementation(token)
 
 	var response string
-	var err error
 
 	executed := false
 	if !executed {
