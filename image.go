@@ -11,17 +11,18 @@ import (
 )
 
 var (
-	newPtr      = flag.Bool("new", false, "Create new image")
-	namePtr     = flag.String("name", "", "Name of image")
-	sourcePtr   = flag.String("source", "", "Source of image")
-	addonPtr    = flag.String("addon", "", "Addon for image")
-	scriptPtr   = flag.String("script", "script.yml", "Script for image")
-	languagePtr = flag.String("language", "", "Source language of image")
-	binaryPtr   = flag.String("binary", "", "Path to image binary")
-	displayPtr  = flag.Bool("display", false, "Display all images")
-	makelogPtr  = flag.Bool("makelog", false, "View making log of image")
-	downloadPtr = flag.Bool("download", false, "Download image binary")
-	uploadPtr   = flag.Bool("upload", false, "Upload image binary")
+	newPtr           = flag.Bool("new", false, "Create new image")
+	namePtr          = flag.String("name", "", "Name of image")
+	sourcePtr        = flag.String("source", "", "Source of image")
+	addonPtr         = flag.String("addon", "", "Addon for image")
+	scriptPtr        = flag.String("script", "script.yml", "Script for image")
+	languagePtr      = flag.String("language", "", "Source language of image")
+	binaryPtr        = flag.String("binary", "", "Path to image binary")
+	displayPtr       = flag.Bool("display", false, "Display all images")
+	makelogPtr       = flag.Bool("makelog", false, "View making log of image")
+	downloadPtr      = flag.Bool("download", false, "Download image binary")
+	uploadPtr        = flag.Bool("upload", false, "Upload image binary")
+	systemVolumesPtr = flag.Bool("sysvol", true, "Use system volumes")
 )
 
 // processImages process image operations
@@ -64,6 +65,7 @@ func processImages(cli middleware.RumpRunCLIInterface) (response string, execute
 			if *binaryPtr != "" {
 				image.MakeBin = false
 			}
+			image.SystemVolumes = *systemVolumesPtr
 		}
 		b, err = json.Marshal(image)
 		if err != nil {
