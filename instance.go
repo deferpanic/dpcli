@@ -2,139 +2,160 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
-	"github.com/deferpanic/dpcli/middleware"
 	"log"
 	"os"
 )
 
-var (
-	scaleupPtr   = flag.Bool("scaleup", false, "Scale up execution of image")
-	countPtr     = flag.Int("count", 1, "Number of image instances to launch")
-	forcePtr     = flag.Bool("force", false, "Ignore errors during command execution")
-	scaledownPtr = flag.Bool("scaledown", false, "Scale down execution of image")
-	domainPtr    = flag.String("domain", "", "Domain name of image instance")
-	runlogPtr    = flag.Bool("runlog", false, "View execution log of image instance")
-	showPtr      = flag.Bool("show", false, "Show image instances")
-	pausePtr     = flag.Bool("pause", false, "Stop image instance")
-	resumePtr    = flag.Bool("resume", false, "Start image instance")
-)
+// Instance is the base struct for management of instances
+type Instance struct {
+	Name   string `json:"Name"`
+	Domain string `json:"Domain"`
+	Force  bool   `json:"Force"`
+}
 
-// processInstances process instance operations
-func processInstances(cli middleware.RumpRunCLIInterface) (response string, executed bool, err error) {
-	var b []byte
+type Instances struct {
+}
 
-	executed = false
-	if *scaleupPtr {
-		image := &Image{}
-		if *namePtr == "" {
-			log.Println("Please provide image name")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		image.Name = *namePtr
-		if *countPtr < 1 {
-			log.Println("Number of image instances to launch can't be less than 1")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		image.Count = *countPtr
-		image.Force = *forcePtr
-		b, err = json.Marshal(image)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		executed = true
-		response, err = cli.Postit(b, scaleupURL)
+func (instances *Instances) New(name string) {
+	image := &Image{}
+	image.Name = name
+	image.Count = 1
+
+	// FIXME
+	image.Force = true
+
+	b, err := json.Marshal(image)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+	response, err := cli.Postit(b, scaleupURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
 	}
 
-	if *scaledownPtr {
-		if *namePtr == "" && *domainPtr == "" {
-			log.Println("Please provide image name or image instance domain name")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		instance := &Instance{}
-		instance.Name = *namePtr
-		instance.Domain = *domainPtr
-		instance.Force = *forcePtr
-		b, err = json.Marshal(instance)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		executed = true
-		response, err = cli.Postit(b, scaledownURL)
+}
+
+func (instances *Instances) Log(domain string) {
+	instance := &Instance{}
+	instance.Domain = domain
+	b, err := json.Marshal(instance)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
 	}
 
-	if *runlogPtr {
-		instance := &Instance{}
-		if *domainPtr == "" {
-			log.Println("Please provide image instance domain name")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		instance.Domain = *domainPtr
-		b, err = json.Marshal(instance)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		executed = true
-		response, err = cli.Postit(b, runlogURL)
+	response, err := cli.Postit(b, runlogURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
 	}
 
-	if *showPtr {
-		image := &Image{}
-		if *namePtr == "" {
-			log.Println("Please provide image name")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		image.Name = *namePtr
-		b, err = json.Marshal(image)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		executed = true
-		response, err = cli.Postit(b, showURL)
+}
+
+func (instances *Instances) List(name string) {
+	image := &Image{}
+	image.Name = name
+
+	b, err := json.Marshal(image)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
 	}
 
-	if *pausePtr {
-		instance := &Instance{}
-		if *domainPtr == "" {
-			log.Println("Please provide image instance domain name")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		instance.Domain = *domainPtr
-		b, err = json.Marshal(instance)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		executed = true
-		response, err = cli.Postit(b, pauseURL)
+	response, err := cli.Postit(b, showURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
+	}
+}
+
+func (instances *Instances) Pause(domain string) {
+	instance := &Instance{}
+	instance.Domain = domain
+
+	b, err := json.Marshal(instance)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
 	}
 
-	if *resumePtr {
-		instance := &Instance{}
-		if *domainPtr == "" {
-			log.Println("Please provide image instance domain name")
-			flag.PrintDefaults()
-			os.Exit(1)
-		}
-		instance.Domain = *domainPtr
-		b, err = json.Marshal(instance)
-		if err != nil {
-			log.Println(err)
-			os.Exit(1)
-		}
-		executed = true
-		response, err = cli.Postit(b, resumeURL)
+	response, err := cli.Postit(b, pauseURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
 	}
 
-	return response, executed, err
+}
+
+func (instances *Instances) Resume(domain string) {
+	instance := &Instance{}
+	instance.Domain = domain
+
+	b, err := json.Marshal(instance)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+
+	response, err := cli.Postit(b, resumeURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
+	}
+}
+
+func (instances *Instances) Scaleup(name string, count int) {
+	image := &Image{}
+	image.Name = name
+	if count < 1 {
+		log.Println("Number of image instances to launch can't be less than 1")
+		os.Exit(1)
+	}
+	image.Count = count
+
+	// FIXME
+	image.Force = true
+
+	b, err := json.Marshal(image)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+
+	response, err := cli.Postit(b, scaleupURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
+	}
+}
+
+func (instances *Instances) Scaledown(name string, domain string) {
+	instance := &Instance{}
+	instance.Name = name
+	instance.Domain = domain
+
+	// FIXME
+	instance.Force = true
+
+	b, err := json.Marshal(instance)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+
+	response, err := cli.Postit(b, scaledownURL)
+	if err != nil {
+		redBold(response)
+	} else {
+		greenBold(response)
+	}
+
 }

@@ -9,6 +9,11 @@ provided below.
 You can either pass your token in with the -token flag or you maybe
 stick it in ~/.dprc.
 
+## Depedencies:
+```
+go get gopkg.in/alecthomas/kingpin.v2
+```
+
 ## Build
 ```
 go build
@@ -18,8 +23,7 @@ go build
 
 ### Create from Repository
 ```
-./dpcli -new -token TOKEN -name bob -language php \
-  -source https://github.com/vsukhin/phprump
+./dpcli projects new bob php https://github.com/vsukhin/phprump -token TOKEN
 ```
 
 ### Create from Image Binary
