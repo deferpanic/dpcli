@@ -9,6 +9,11 @@ provided below.
 You can either pass your token in with the -token flag or you maybe
 stick it in ~/.dprc.
 
+## Dependencies:
+```
+go get gopkg.in/alecthomas/kingpin.v2
+```
+
 ## Build
 ```
 go build
@@ -18,8 +23,7 @@ go build
 
 ### Create from Repository
 ```
-./dpcli -new -token TOKEN -name bob -language php \
-  -source https://github.com/vsukhin/phprump
+./dpcli --token="TOKEN" projects new myproject php https://github.com/vsukhin/phprump
 ```
 
 ### Create from Image Binary
@@ -29,13 +33,13 @@ go build
 ### List
 
 ```
-./dpcli -token TOKEN -display
+./dpcli --token="TOKEN" projects list
 ```
 
 ### View Log
 
 ```
-./dpcli -token TOKEN -name bob -makelog
+./dpcli --token="TOKEN" projects log myproject
 ```
 
 ## Instances
@@ -43,42 +47,42 @@ go build
 ### Create
 
 ```
-./dpcli -token TOKEN -name bob -scaleup
+./dpcli --token="TOKEN" instances new myproject
 ```
 
 ### Log of Individual Instance
 ```
-./dpcli -token TOKEN -runlog -domain robert-oklahoma
+./dpcli --token="TOKEN" instances log gregory-jennifer.deferpanic.net
 ```
 
 ### List of Instances attached to Image/Project
 
 ```
-./dpcli -token TOKEN -show -name bob
+./dpcli --token="TOKEN" instances list myproject
 ```
 
 ### Pause
 
 ```
-./dpcli -token TOKEN -pause -domain robert-oklahoma
+./dpcli --token="TOKEN" instances pause gregory-jennifer.deferpanic.net
 ```
 
 ### Resume
 
 ```
-./dpcli -token TOKEN -resume -domain robert-oklahoma
+./dpcli --token="TOKEN" instances resume gregory-jennifer.deferpanic.net
 ```
 
 ### ScaleUp
 
 ```
-./dpcli -token TOKEN -name bob -scaleup
+./dpcli --token="TOKEN" instances scaleup myproject
 ```
 
 ### ScaleDown
 
 ```
-./dpcli -token TOKEN -name bob -scaledown
+./dpcli --token="TOKEN" instances scaledown myproject gregory-jennifer.deferpanic.net
 ```
 
 ## Volumes
@@ -92,7 +96,7 @@ go build
 ### List
 
 ```
-./dpcli -token TOKEN -listbackups
+./dpcli --token="TOKEN" backups list
 ```
 
 ## Languages
@@ -100,7 +104,7 @@ go build
 ### List
 
 ```
-./dpcli -token TOKEN -languages
+./dpcli --token="TOKEN" languages
 ```
 
 ## Resources
@@ -111,24 +115,23 @@ go build
 
 To see the available resources:
 ```
-./dpcli -token TOKEN -builtins
+./dpcli --token="TOKEN" resources list myproject
 ```
 
 ## Addons
 
 To see the available addons:
 ```
-./dpcli -token TOKEN -builtins
+./dpcli --token="TOKEN" addons
 ```
 
 ## Status
 ```
-./dpcli -status
+./dpcli status
 ```
 
 ## Version
 ```
-./dpcli -version
 ```
 
 
