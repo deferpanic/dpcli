@@ -15,7 +15,7 @@ pi
 - [Instances](#user-content-instances)
 - [Volumes](#user-content-volumes)
 - [Backups](#user-content-backups)
-- [Resources](#user-content-resoures)
+- [Resources](#user-content-resources)
 - [Addons](#user-content-addons)
 - [Languages](#user-content-languages)
  
