@@ -8,10 +8,10 @@ import (
 
 type Backups struct{}
 
-func (backups *Backups) Save(domain string, name string) {
+func (backups *Backups) Save(name string, domain string) {
 	instance := &Instance{}
-	instance.Domain = domain
 	instance.Name = name
+	instance.Domain = domain
 
 	b, err := json.Marshal(instance)
 	if err != nil {
@@ -26,10 +26,12 @@ func (backups *Backups) Save(domain string, name string) {
 	}
 }
 
-func (backups *Backups) Restore(domain string, name string) {
+func (backups *Backups) Restore(name string, domain string) {
 	instance := &Instance{}
-	instance.Domain = domain
+
 	instance.Name = name
+	instance.Domain = domain
+
 	b, err := json.Marshal(instance)
 	if err != nil {
 		log.Println(err)
