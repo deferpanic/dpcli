@@ -20,9 +20,9 @@ func (backups *Backups) Save(domain string, name string) {
 	}
 	response, err := cli.Postit(b, savebackupURL)
 	if err != nil {
-		redBold(response)
+		log.Println(redBold(response))
 	} else {
-		greenBold(response)
+		log.Println(greenBold(response))
 	}
 }
 
@@ -38,17 +38,17 @@ func (backups *Backups) Restore(domain string, name string) {
 
 	response, err := cli.Postit(b, restorebackupURL)
 	if err != nil {
-		redBold(response)
+		log.Println(redBold(response))
 	} else {
-		greenBold(response)
+		log.Println(greenBold(response))
 	}
 }
 
 func (backups *Backups) List() {
 	response, err := cli.Postit(nil, listbackupsURL)
 	if err != nil {
-		redBold(response)
+		log.Println(redBold(response))
 	} else {
-		greenBold(response)
+		log.Println(greenBold(response))
 	}
 }

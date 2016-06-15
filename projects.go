@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
-	"log"
 	"net/url"
 	"os"
 )
@@ -24,15 +24,15 @@ func (projects *Projects) New(name string, language string, script string) {
 
 	b, err := json.Marshal(image)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, newURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }
 
@@ -40,14 +40,14 @@ func (projects *Projects) New(name string, language string, script string) {
 func (projects *Projects) NewFromImage(name string, imagePath string) {
 	data, err := ioutil.ReadFile(imagePath)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 	response, err := cli.Postit(data, putURL+"/"+url.QueryEscape(name))
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -56,9 +56,9 @@ func (projects *Projects) NewFromImage(name string, imagePath string) {
 func (projects *Projects) List() {
 	response, err := cli.Postit(nil, displayURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -70,23 +70,17 @@ func (projects *Projects) Log(name string) {
 	image.Name = name
 	b, err := json.Marshal(image)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 	response, err := cli.Postit(b, makelogURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
-
-// ScaleUp scales up a project
-func (projects *Projects) ScaleUp() {}
-
-// Scaledown scales down a project
-func (projects *Projects) ScaleDown() {}
 
 // Download downloads everything in a project
 // {image, volumes, deferpanic.yml if present
@@ -96,15 +90,15 @@ func (projects *Projects) Download(name string) {
 	image.Name = name
 	b, err := json.Marshal(image)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, getURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -113,15 +107,15 @@ func (projects *Projects) Download(name string) {
 func (projects *Projects) Upload(name string, binary string) {
 	data, err := ioutil.ReadFile(binary)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(data, putURL+"/"+url.QueryEscape(name))
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }

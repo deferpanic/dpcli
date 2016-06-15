@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"os"
 )
 
@@ -23,15 +23,15 @@ func (resources *Resources) New(name string, owner string, builtin string) {
 
 	b, err := json.Marshal(resource)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, newresourceURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -42,14 +42,14 @@ func (resources *Resources) List(name string) {
 
 	b, err := json.Marshal(resource)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 	response, err := cli.Postit(b, listresourcesURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }

@@ -1,14 +1,16 @@
 package main
 
-import ()
+import (
+	"fmt"
+)
 
 type Status struct{}
 
 func (status *Status) Show() {
 	response, err := cli.Postit(nil, statusURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }

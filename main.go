@@ -49,6 +49,7 @@ var (
 
 	instancesScaleDownCommand = instancesCommand.Command("scaledown", "ScaleDown Instance.")
 	instancesScaleDownName    = instancesScaleDownCommand.Arg("name", "Project name.").Required().String()
+	instancesScaleDownDomain  = instancesScaleDownCommand.Arg("domain", "Domain").Required().String()
 
 	volumesCommand = app.Command("volumes", "Volumes.")
 
@@ -78,17 +79,15 @@ var (
 
 	builtinsCommand = app.Command("builtins", "Builtins.")
 
-	version = app.Command("version", "Show version.")
-
 	status = app.Command("status", "Show Status.")
 )
 
 // fixme
 // should only have to be called once..
-func setToken() string {
+func setToken() {
 	dat, err := ioutil.ReadFile(os.Getenv("HOME") + "/.dprc")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(redBold("you can stick your token in ~/.dprc"))
 	}
 	dtoken := string(dat)
 
@@ -96,14 +95,17 @@ func setToken() string {
 		dtoken = *token
 	}
 
-	return dtoken
+	if dtoken == "" {
+		redBold("no token")
+		os.Exit(1)
+	}
+
+	cli = middleware.NewRumpRunCLIImplementation(dtoken)
 }
 
 var cli *middleware.RumpRunCLIImplementation
 
 func main() {
-
-	cli = middleware.NewRumpRunCLIImplementation(*token)
 
 	kingpin.Version("0.0.1")
 
@@ -121,15 +123,15 @@ func main() {
 		setToken()
 		projects := &Projects{}
 		projects.Log(*projectsLogName)
-	case "projects scaleup":
+	case "instances scaleup":
 		setToken()
-		projects := &Projects{}
-		projects.ScaleUp()
-	case "projects scaledown":
+		instances := &Instances{}
+		instances.ScaleUp(*instancesScaleUpName)
+	case "instances scaledown":
 		setToken()
-		projects := &Projects{}
-		projects.ScaleDown()
-	case "instances create":
+		instances := &Instances{}
+		instances.ScaleDown(*instancesScaleDownName, *instancesScaleDownDomain)
+	case "instances new":
 		setToken()
 		instances := &Instances{}
 		instances.New(*instancesNewName)
@@ -165,7 +167,7 @@ func main() {
 		setToken()
 		backups := &Backups{}
 		backups.Restore(*backupsRestoreName, *backupsRestoreDomain)
-	case "languages list":
+	case "languages":
 		setToken()
 		languages := &Languages{}
 		languages.List()
@@ -177,10 +179,13 @@ func main() {
 		setToken()
 		resources := &Resources{}
 		resources.List(*resourcesListName)
-	case "addons list":
+	case "addons":
 		setToken()
 		addons := &Addons{}
 		addons.List()
+	case "status":
+		setToken()
+		status := &Status{}
+		status.Show()
 	}
-
 }

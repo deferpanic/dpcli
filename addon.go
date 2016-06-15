@@ -1,14 +1,16 @@
 package main
 
-import ()
+import (
+	"fmt"
+)
 
 type Addons struct{}
 
 func (addons *Addons) List() {
 	response, err := cli.Postit(nil, addonsURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }

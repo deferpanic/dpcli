@@ -1,14 +1,16 @@
 package main
 
-import ()
+import (
+	"fmt"
+)
 
 type Languages struct{}
 
 func (languages *Languages) List() {
 	response, err := cli.Postit(nil, languagesURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }

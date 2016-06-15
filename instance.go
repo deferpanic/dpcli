@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"log"
+	"fmt"
 	"os"
 )
 
@@ -26,14 +26,14 @@ func (instances *Instances) New(name string) {
 
 	b, err := json.Marshal(image)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 	response, err := cli.Postit(b, scaleupURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -43,15 +43,15 @@ func (instances *Instances) Log(domain string) {
 	instance.Domain = domain
 	b, err := json.Marshal(instance)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, runlogURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -62,15 +62,15 @@ func (instances *Instances) List(name string) {
 
 	b, err := json.Marshal(image)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, showURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }
 
@@ -80,15 +80,15 @@ func (instances *Instances) Pause(domain string) {
 
 	b, err := json.Marshal(instance)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, pauseURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
@@ -99,45 +99,43 @@ func (instances *Instances) Resume(domain string) {
 
 	b, err := json.Marshal(instance)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, resumeURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }
 
-func (instances *Instances) Scaleup(name string, count int) {
+// FIXME - wrong api
+func (instances *Instances) ScaleUp(name string) {
 	image := &Image{}
 	image.Name = name
-	if count < 1 {
-		log.Println("Number of image instances to launch can't be less than 1")
-		os.Exit(1)
-	}
-	image.Count = count
+	image.Count = 1
 
 	// FIXME
 	image.Force = true
 
 	b, err := json.Marshal(image)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, scaleupURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 }
 
-func (instances *Instances) Scaledown(name string, domain string) {
+// FIXME - wrong api
+func (instances *Instances) ScaleDown(name string, domain string) {
 	instance := &Instance{}
 	instance.Name = name
 	instance.Domain = domain
@@ -147,15 +145,15 @@ func (instances *Instances) Scaledown(name string, domain string) {
 
 	b, err := json.Marshal(instance)
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	response, err := cli.Postit(b, scaledownURL)
 	if err != nil {
-		redBold(response)
+		fmt.Println(redBold(response))
 	} else {
-		greenBold(response)
+		fmt.Println(greenBold(response))
 	}
 
 }
