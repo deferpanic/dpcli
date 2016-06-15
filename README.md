@@ -10,14 +10,14 @@ You can either pass your token in with the -token flag or you maybe
 stick it in ~/.dprc.
 pi
 
-- [Installing](#Build)
-- [Projects](#Projects)
-- [Instances](#Instances)
-- [Volumes](#Volumes)
-- [Backups](#Backups)
-- [Resources](#Resoures)
-- [Addons](#Addons)
-- [Languages](#Languages)
+- [Installing](#user-content-build)
+- [Projects](#user-content-projects)
+- [Instances](#user-content-instances)
+- [Volumes](#user-content-volumes)
+- [Backups](#user-content-backups)
+- [Resources](#user-content-resoures)
+- [Addons](#user-content-addons)
+- [Languages](#user-content-languages)
  
 ## Dependencies:
 ```
