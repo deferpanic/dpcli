@@ -19,7 +19,7 @@ type Volumes struct{}
 
 func (volumes *Volumes) ListByName(name string) {
 	volume := &Volume{}
-	volume.Name = name
+	volume.Owner = name
 
 	volumes.List(volume)
 }
@@ -32,7 +32,6 @@ func (volumes *Volumes) ListByDomain(domain string) {
 }
 
 func (volumes *Volumes) List(volume *Volume) {
-
 	b, err := json.Marshal(volume)
 	if err != nil {
 		fmt.Println(err)
@@ -45,4 +44,43 @@ func (volumes *Volumes) List(volume *Volume) {
 	} else {
 		fmt.Println(greenBold(response))
 	}
+}
+
+func (volumes *Volumes) Attach(name string, domain string) {
+	volume := &Volume{}
+	volume.Name = name
+	volume.Domain = domain
+
+	b, err := json.Marshal(volume)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	response, err := cli.Postit(b, connectvolumeURL)
+	if err != nil {
+		fmt.Println(redBold(response))
+	} else {
+		fmt.Println(greenBold(response))
+	}
+
+}
+
+func (volumes *Volumes) Detach(name string, domain string) {
+	volume := &Volume{}
+	volume.Name = name
+	volume.Domain = domain
+
+	b, err := json.Marshal(volume)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	response, err := cli.Postit(b, disconnectvolumeURL)
+	if err != nil {
+		fmt.Println(redBold(response))
+	} else {
+		fmt.Println(greenBold(response))
+	}
+
 }

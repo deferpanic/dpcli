@@ -100,6 +100,18 @@ on doing so in the very near future.
 
 ## Volumes
 
+### List By Domain
+
+```
+./dpcli --token="TOKEN" volumes list --domain=stephen-anna.deferpanic.net
+```
+
+### List by Image Name
+
+```
+./dpcli --token="TOKEN" volumes list --name=text
+```
+
 ## Backups
 
 ### Save
@@ -171,6 +183,9 @@ To see the available addons:
 
 ## Examples
 
+[Static Website](https://github.com/vsukhin/html)
+
+[Php](https://github.com/vsukhin/phprump)
 
 [Php with Redis](https://github.com/vsukhin/phprumpredis)
 
@@ -184,4 +199,3 @@ To see the available addons:
 
 [Go with DeferPanic client](https://github.com/vsukhin/dpexample)
 
-[Php](https://github.com/vsukhin/phprump)
