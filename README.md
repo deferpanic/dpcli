@@ -1,4 +1,4 @@
-# dpcli
+# dpli
 DeferPanic.Net Unikernel IaaS Client
 
 You'll need an account so go sign up at https://deferpanic.net/signup .
@@ -8,7 +8,17 @@ provided below.
 
 You can either pass your token in with the -token flag or you maybe
 stick it in ~/.dprc.
+pi
 
+- [Installing](#Build)
+- [Projects](#Projects)
+- [Instances](#Instances)
+- [Volumes](#Volumes)
+- [Backups](#Backups)
+- [Resources](#Resoures)
+- [Addons](#Addons)
+- [Languages](#Languages)
+ 
 ## Dependencies:
 ```
 go get gopkg.in/alecthomas/kingpin.v2
@@ -20,6 +30,9 @@ go build
 ```
 
 ## Projects
+
+We currently don't support uploading custom images/volumes but we plan
+on doing so in the very near future.
 
 ### Create from Repository
 ```
@@ -91,7 +104,28 @@ go build
 
 ### Save
 
+Pause the instance
+(Live Backups coming soon.)
+```
+./dpcli --token="TOKEN" instances pause gregory-jennifer.deferpanic.net
+```
+
+Back it up
+```
+./dpcli --token="TOKEN" backups save myproject gregory-jennifer.deferpanic.net
+```
+
 ### Restore
+
+Pause the instance
+```
+./dpcli --token="TOKEN" instances pause gregory-jennifer.deferpanic.net
+```
+
+Back it up
+```
+./dpcli --token="TOKEN" backups restore myproject gregory-jennifer.deferpanic.net
+```
 
 ### List
 
