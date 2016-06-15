@@ -51,7 +51,19 @@ var (
 	instancesScaleDownName    = instancesScaleDownCommand.Arg("name", "Project name.").Required().String()
 	instancesScaleDownDomain  = instancesScaleDownCommand.Arg("domain", "Domain").Required().String()
 
-	volumesCommand = app.Command("volumes", "Volumes.")
+	volumesCommand     = app.Command("volumes", "Volumes.")
+	volumesListCommand = volumesCommand.Command("list", "List volumes")
+	volumesListName    = volumesListCommand.Arg("name", "Project name.").String()
+	volumesListDomain  = volumesListCommand.Arg("domain", "Domain.").String()
+
+	volumesCreateCommand   = volumesCommand.Command("create", "Create volume")
+	volumesShowCommand     = volumesCommand.Command("show", "Show Volume")
+	volumesUpdateCommand   = volumesCommand.Command("update", "Update Volume")
+	volumesDeleteCommand   = volumesCommand.Command("delete", "Delete Volume")
+	volumesAttachCommand   = volumesCommand.Command("attach", "Attach Volume")
+	volumesDetachCommand   = volumesCommand.Command("detach", "Detach Volume")
+	volumesDownloadCommand = volumesCommand.Command("download", "Download Volume")
+	volumesUploadCommand   = volumesCommand.Command("upload", "Upload Volume")
 
 	backupsCommand     = app.Command("backups", "Backups.")
 	backupsSaveCommand = backupsCommand.Command("save", "Save backup of image instance.")
@@ -154,7 +166,28 @@ func main() {
 	case "volumes list":
 		setToken()
 		volumes := &Volumes{}
-		volumes.List()
+		if *volumesListName != "" {
+			volumes.ListByName(*volumesListName)
+		}
+		if *volumesListDomain != "" {
+			volumes.ListByDomain(*volumesListDomain)
+		}
+	case "volumes create":
+		setToken()
+	case "volumes show":
+		setToken()
+	case "volumes update":
+		setToken()
+	case "volumes delete":
+		setToken()
+	case "volumes attach":
+		setToken()
+	case "volumes detach":
+		setToken()
+	case "volumes download":
+		setToken()
+	case "volumes upload":
+		setToken()
 	case "backups list":
 		setToken()
 		backups := &Backups{}
