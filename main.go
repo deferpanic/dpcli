@@ -1,4 +1,5 @@
-// Package main implements access to the deferpanic rumprun api for users.
+// Package main implements access to the deferpanic unikernel IaaS API
+// for users.
 package main
 
 import (
@@ -51,7 +52,26 @@ var (
 	instancesScaleDownName    = instancesScaleDownCommand.Arg("name", "Project name.").Required().String()
 	instancesScaleDownDomain  = instancesScaleDownCommand.Arg("domain", "Domain").Required().String()
 
-	volumesCommand = app.Command("volumes", "Volumes.")
+	volumesCommand     = app.Command("volumes", "Volumes.")
+	volumesListCommand = volumesCommand.Command("list", "List volumes")
+	volumesListName    = volumesListCommand.Flag("name", "Project name.").String()
+	volumesListDomain  = volumesListCommand.Flag("domain", "Domain.").String()
+
+	volumesCreateCommand = volumesCommand.Command("create", "Create volume")
+	volumesShowCommand   = volumesCommand.Command("show", "Show Volume")
+	volumesUpdateCommand = volumesCommand.Command("update", "Update Volume")
+	volumesDeleteCommand = volumesCommand.Command("delete", "Delete Volume")
+
+	volumesAttachCommand = volumesCommand.Command("attach", "Attach Volume")
+	volumesAttachName    = volumesAttachCommand.Flag("name", "Project name.").String()
+	volumesAttachDomain  = volumesAttachCommand.Flag("domain", "Domain.").String()
+
+	volumesDetachCommand = volumesCommand.Command("detach", "Detach Volume")
+	volumesDetachName    = volumesDetachCommand.Flag("name", "Project name.").String()
+	volumesDetachDomain  = volumesDetachCommand.Flag("domain", "Domain.").String()
+
+	volumesDownloadCommand = volumesCommand.Command("download", "Download Volume")
+	volumesUploadCommand   = volumesCommand.Command("upload", "Upload Volume")
 
 	backupsCommand     = app.Command("backups", "Backups.")
 	backupsSaveCommand = backupsCommand.Command("save", "Save backup of image instance.")
@@ -154,7 +174,32 @@ func main() {
 	case "volumes list":
 		setToken()
 		volumes := &Volumes{}
-		volumes.List()
+		if *volumesListName != "" {
+			volumes.ListByName(*volumesListName)
+		}
+		if *volumesListDomain != "" {
+			volumes.ListByDomain(*volumesListDomain)
+		}
+	case "volumes create":
+		setToken()
+	case "volumes show":
+		setToken()
+	case "volumes update":
+		setToken()
+	case "volumes delete":
+		setToken()
+	case "volumes attach":
+		setToken()
+		volumes := &Volumes{}
+		volumes.Attach(*volumesAttachName, *volumesAttachDomain)
+	case "volumes detach":
+		setToken()
+		volumes := &Volumes{}
+		volumes.Detach(*volumesAttachName, *volumesAttachDomain)
+	case "volumes download":
+		setToken()
+	case "volumes upload":
+		setToken()
 	case "backups list":
 		setToken()
 		backups := &Backups{}

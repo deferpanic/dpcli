@@ -20,7 +20,7 @@ type RumpRunCLIImplementation struct {
 }
 
 const (
-	// httpTooManyRequests is htto status code for too many requests error
+	// httpTooManyRequests is http status code for too many requests error
 	httpTooManyRequests = 429
 )
 
