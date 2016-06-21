@@ -1,6 +1,8 @@
 # dpli
 DeferPanic.Net Unikernel IaaS Client
 
+[![wercker status](https://app.wercker.com/status/44ace461901cac92c53e919de5d7e5e2/s/master "wercker status")](https://app.wercker.com/project/bykey/44ace461901cac92c53e919de5d7e5e2)
+
 You'll need an account so go sign up at https://deferpanic.net/signup .
 Then you can find your API token @ https://deferpanic.net/home/settings
 . Replace all occurences of TOKEN with your token in the examples
@@ -41,6 +43,11 @@ on doing so in the very near future.
 
 ### Create from Image Binary
 ```
+```
+
+### Remove
+```
+./dpcli --token="TOKEN" projects delete myproject
 ```
 
 ### List

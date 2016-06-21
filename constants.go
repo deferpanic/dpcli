@@ -1,6 +1,6 @@
 package main
 
-const (
+var (
 	// APIVersion is the version of this CLI
 	APIVersion = "v0.1"
 
@@ -21,15 +21,6 @@ const (
 
 	// resourceURL is the url for resource management
 	resourceURL = APIBase + "/resource"
-
-	// newURL is the url to create new rumprun image
-	newURL = imageURL + "/new"
-
-	// displayURL is the url to display all rumprun images
-	displayURL = imageURL + "/display"
-
-	// makelogURL is the url to view making log of rumprun images
-	makelogURL = imageURL + "/makelog"
 
 	// getURL is the url to download rumprun image binary
 	getURL = imageURL + "/get"

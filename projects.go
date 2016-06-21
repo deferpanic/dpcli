@@ -11,11 +11,15 @@ import (
 type Projects struct{}
 
 // New creates a new project
-func (projects *Projects) New(name string, language string, script string) {
+func (projects *Projects) New(name string, language string, source string, script string) {
+
 	image := &Image{}
 	image.Name = name
 	image.Language = language
 	image.MakeBin = true
+	image.Source = source
+	image.SystemVolumes = true
+	image.Buildable = true
 
 	data, err := ioutil.ReadFile(script)
 	if err == nil {
@@ -28,7 +32,26 @@ func (projects *Projects) New(name string, language string, script string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, newURL)
+	response, err := cli.Postit(b, APIBase+"/image/new")
+	if err != nil {
+		fmt.Println(redBold(response))
+	} else {
+		fmt.Println(greenBold(response))
+	}
+}
+
+// Delete deletes a project
+func (projects *Projects) Delete(name string) {
+
+	image := &Image{}
+	image.Name = name
+	b, err := json.Marshal(image)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	response, err := cli.Postit(b, APIBase+"/image/remove")
 	if err != nil {
 		fmt.Println(redBold(response))
 	} else {
@@ -54,7 +77,7 @@ func (projects *Projects) NewFromImage(name string, imagePath string) {
 
 // List lists all your projects
 func (projects *Projects) List() {
-	response, err := cli.Postit(nil, displayURL)
+	response, err := cli.Postit(nil, APIBase+"/image/display")
 	if err != nil {
 		fmt.Println(redBold(response))
 	} else {
@@ -73,7 +96,7 @@ func (projects *Projects) Log(name string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	response, err := cli.Postit(b, makelogURL)
+	response, err := cli.Postit(b, APIBase+"/image/makelog")
 	if err != nil {
 		fmt.Println(redBold(response))
 	} else {

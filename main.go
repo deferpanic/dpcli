@@ -16,11 +16,16 @@ var (
 	token       = app.Flag("token", "Token").String()
 	interactive = app.Flag("interactive", "Disable interactive mode .").Bool()
 
-	projectsCommand         = app.Command("projects", "Projects.")
-	projectsNewCommand      = projectsCommand.Command("new", "Create a new project.")
-	projectsNewName         = projectsNewCommand.Arg("name", "Project name.").Required().String()
-	projectsNewLanguage     = projectsNewCommand.Arg("language", "Project language.").Required().String()
-	projectsNewSource       = projectsNewCommand.Arg("source", "Project source.").Required().String()
+	projectsCommand     = app.Command("projects", "Projects.")
+	projectsNewCommand  = projectsCommand.Command("new", "Create a new project.")
+	projectsNewName     = projectsNewCommand.Arg("name", "Project name.").Required().String()
+	projectsNewLanguage = projectsNewCommand.Arg("language", "Project language.").Required().String()
+	projectsNewSource   = projectsNewCommand.Arg("source", "Project source.").Required().String()
+	projectsNewScript   = projectsNewCommand.Arg("script", "Project script.").String()
+
+	projectsDeleteCommand = projectsCommand.Command("delete", "Delete a project.")
+	projectsDeleteName    = projectsDeleteCommand.Arg("name", "Project name.").Required().String()
+
 	projectsDownloadCommand = projectsCommand.Command("download", "Download image.")
 	projectsUploadCommand   = projectsCommand.Command("upload", "Upload image.")
 	projectsUploadBinary    = projectsUploadCommand.Arg("binary", "Image binary path.").Required().String()
@@ -133,8 +138,11 @@ func main() {
 	case "projects new":
 		setToken()
 		projects := &Projects{}
-		projects.New(*projectsNewName, *projectsNewLanguage, *projectsNewSource)
-		fmt.Println("creating a new project")
+		projects.New(*projectsNewName, *projectsNewLanguage, *projectsNewSource, *projectsNewScript)
+	case "projects delete":
+		setToken()
+		projects := &Projects{}
+		projects.Delete(*projectsDeleteName)
 	case "projects list":
 		setToken()
 		projects := &Projects{}

@@ -14,3 +14,9 @@ func (addons *Addons) List() {
 		fmt.Println(greenBold(response))
 	}
 }
+
+func (addons *Addons) New() {
+}
+
+func (addons *Addons) Delete() {
+}
