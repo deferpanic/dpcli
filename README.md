@@ -75,6 +75,12 @@ on doing so in the very near future.
 ./dpcli --token="TOKEN" instances log gregory-jennifer.deferpanic.net
 ```
 
+### List all Instances
+
+```
+./dpcli --token="TOKEN" instances list
+```
+
 ### List of Instances attached to Image/Project
 
 ```

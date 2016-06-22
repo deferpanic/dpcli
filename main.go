@@ -42,7 +42,7 @@ var (
 	instancesLogName    = instancesLogCommand.Arg("name", "Instance name.").Required().String()
 
 	instancesListCommand = instancesCommand.Command("list", "List instances attached to project.")
-	instancesListName    = instancesListCommand.Arg("name", "Project name.").Required().String()
+	instancesListName    = instancesListCommand.Arg("name", "Project name.").String()
 
 	instancesPauseCommand = instancesCommand.Command("pause", "Pause instance.")
 	instancesPauseName    = instancesPauseCommand.Arg("name", "Project name.").Required().String()
