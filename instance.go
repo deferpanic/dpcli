@@ -6,6 +6,26 @@ import (
 	"os"
 )
 
+var (
+	// scaleupURL is the url to scale up execution of rumprun image
+	scaleupURL = instanceURL + "/scaleup"
+
+	// scaledownURL is the url to scale down execution of rumprun image
+	scaledownURL = instanceURL + "/scaledown"
+
+	// runlogURL is the url to view execution log of rumprun image
+	runlogURL = instanceURL + "/log"
+
+	// showURL is the url to show running rumprun images
+	showURL = instanceURL + "/show"
+
+	// pauseURL is the url to stop existing rumprun image
+	pauseURL = instanceURL + "/pause"
+
+	// resumeURL is the url to start existing rumprun image
+	resumeURL = instanceURL + "/resume"
+)
+
 // Instance is the base struct for management of instances
 type Instance struct {
 	Name   string `json:"Name"`

@@ -93,16 +93,16 @@ var (
 
 	resourcesCommand    = app.Command("resources", "Resources.")
 	resourcesNewCommand = resourcesCommand.Command("new", "Add a resource.")
-	resourcesNewName    = resourcesNewCommand.Arg("name", "name?").Required().String()
+	resourcesNewName    = resourcesNewCommand.Arg("name", "name").Required().String()
 	resourcesNewOwner   = resourcesNewCommand.Arg("builtin", "builtin").Required().String()
-	resourcesNewBuiltin = resourcesNewCommand.Arg("owner", "owner?").Required().String()
+	resourcesNewBuiltin = resourcesNewCommand.Arg("owner", "owner").Required().String()
 
-	resourcesListCommand = resourcesCommand.Command("list", "List available resources.")
-	resourcesListName    = resourcesListCommand.Arg("name", "name.").Required().String()
+	resourcesAvailableCommand = resourcesCommand.Command("available", "List available resources.")
+
+	resourcesListCommand = resourcesCommand.Command("list", "List provisioned resources to project.")
+	resourcesListName    = resourcesListCommand.Arg("project_name", "project_name.").String()
 
 	addonsCommand = app.Command("addons", "Addons.")
-
-	builtinsCommand = app.Command("builtins", "Builtins.")
 
 	status = app.Command("status", "Show Status.")
 )
@@ -224,6 +224,10 @@ func main() {
 		setToken()
 		languages := &Languages{}
 		languages.List()
+	case "resources available":
+		setToken()
+		resources := &Resources{}
+		resources.Available()
 	case "resources create":
 		setToken()
 		resources := &Resources{}
@@ -231,7 +235,11 @@ func main() {
 	case "resources list":
 		setToken()
 		resources := &Resources{}
-		resources.List(*resourcesListName)
+		if *resourcesListName != "" {
+			resources.ListByName(*resourcesListName)
+		} else {
+			resources.List()
+		}
 	case "addons":
 		setToken()
 		addons := &Addons{}

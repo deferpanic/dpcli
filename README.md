@@ -166,9 +166,21 @@ Back it up
 
 ### List
 
-To see the available resources:
+To see all your provisioned resources:
+```
+./dpcli --token="TOKEN" resources list
+```
+
+To see the resources attached to a given project:
 ```
 ./dpcli --token="TOKEN" resources list myproject
+```
+
+### Available
+
+To see the available resources:
+```
+./dpcli --token="TOKEN" resources available
 ```
 
 ## Addons
