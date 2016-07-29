@@ -6,6 +6,34 @@ import (
 	"os"
 )
 
+var (
+
+	// URL is the url for volume management
+	volumeURL = APIBase + "/volume"
+
+	// newvolumeURL is the url to add a volume for rumprun image
+	newvolumeURL = volumeURL + "/new"
+
+	// removevolumeURL is the url to remove a volume from rumprun image
+	removevolumeURL = volumeURL + "/remove"
+
+	// connectvolumeURL is the url to connect a volume to rumprun image
+	connectvolumeURL = volumeURL + "/connect"
+
+	// disconnectvolumeURL is the url to disconnect a volume from
+	// rumprun image
+	disconnectvolumeURL = volumeURL + "/disconnect"
+
+	// listvolumesURL is the url to list all rumprun image volumes
+	listvolumesURL = volumeURL + "/list"
+
+	// getvolumeURL is the url to download rumprun image volume
+	getvolumeURL = volumeURL + "/get"
+
+	// putvolumeURL is the url to upload rumprun image volume
+	putvolumeURL = volumeURL + "/put"
+)
+
 // Volume is the base struct for management of volumes
 type Volume struct {
 	Name       string `json:"Name"`
