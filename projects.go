@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/url"
 	"os"
+	"time"
 )
 
 type Projects struct{}
@@ -75,13 +76,45 @@ func (projects *Projects) NewFromImage(name string, imagePath string) {
 
 }
 
+type Project struct {
+	ID          int
+	Name        string
+	Buildable   string
+	Language    string
+	Source      string
+	BuildStatus string
+	Filename    string
+	Addon       string
+	CreatedAt   time.Time
+}
+
+type ProjectsResponse struct {
+	Title    string
+	Error    string
+	Projects []Project
+}
+
 // List lists all your projects
 func (projects *Projects) List() {
-	response, err := cli.Postit(nil, APIBase+"/image/display")
+	pr := ProjectsResponse{}
+	err := cli.GetJSON(APIBase+"/image/display", &pr)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(redBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(greenBold(pr.Title))
+		fmt.Printf(greenBold("ID\tName\tBuildable\tLanguage\tSource\tBuildStatus\tFilename\tAddon\n"))
+
+		for i := 0; i < len(pr.Projects); i++ {
+			fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\n",
+				pr.Projects[i].ID,
+				pr.Projects[i].Name,
+				pr.Projects[i].Buildable,
+				pr.Projects[i].Language,
+				pr.Projects[i].Source,
+				pr.Projects[i].BuildStatus,
+				pr.Projects[i].Filename,
+				pr.Projects[i].Addon)
+		}
 	}
 
 }
