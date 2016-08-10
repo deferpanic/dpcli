@@ -6,6 +6,17 @@ import (
 	"os"
 )
 
+var (
+	// savebackupURL is the url to save a backup for running rumprun image
+	savebackupURL = backupURL + "/save"
+
+	// restorebackupURL is the url to restore a backup for running rumprun image
+	restorebackupURL = backupURL + "/restore"
+
+	// listbackupsURL is the url to list all rumprun image backups
+	listbackupsURL = backupURL + "/list"
+)
+
 type Backups struct{}
 
 func (backups *Backups) Save(name string, domain string) {

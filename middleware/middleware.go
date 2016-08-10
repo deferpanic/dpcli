@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -85,4 +86,50 @@ func (c *RumpRunCLIImplementation) Postit(b []byte, url string) (result string, 
 	}
 
 	return string(body), nil
+}
+
+// GetJSON does a get request and returns json
+func (c *RumpRunCLIImplementation) GetJSON(url string, iface interface{}) (err error) {
+	defer func() {
+		if rec := recover(); rec != nil {
+			err := fmt.Sprintf("%q", rec)
+			log.Println(err)
+		}
+	}()
+
+	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Set("DP-APIToken", c.Token)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	defer resp.Body.Close()
+
+	switch resp.StatusCode {
+	case http.StatusBadRequest:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("wrong using of API method")
+	case http.StatusUnauthorized:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("wrong or invalid API token")
+	case http.StatusNotFound:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("API method was not found")
+	case httpTooManyRequests:
+		log.Println("too many requests - you are being rate limited")
+		err = errors.New("too many requests - you are being rate limited")
+	case http.StatusInternalServerError:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("internal service error")
+	case http.StatusServiceUnavailable:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("service not available")
+	default:
+	}
+
+	return json.NewDecoder(resp.Body).Decode(iface)
 }
