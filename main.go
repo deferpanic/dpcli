@@ -42,13 +42,13 @@ var (
 	instancesLogName    = instancesLogCommand.Arg("name", "Instance name.").Required().String()
 
 	instancesListCommand = instancesCommand.Command("list", "List instances attached to project.")
-	instancesListName    = instancesListCommand.Arg("name", "Project name.").Required().String()
+	instancesListName    = instancesListCommand.Arg("name", "Project name.").String()
 
 	instancesPauseCommand = instancesCommand.Command("pause", "Pause instance.")
-	instancesPauseName    = instancesPauseCommand.Arg("name", "Project name.").Required().String()
+	instancesPauseName    = instancesPauseCommand.Arg("domain", "Instance domain").Required().String()
 
 	instancesResumeCommand = instancesCommand.Command("resume", "Resume Instance.")
-	instancesResumeName    = instancesResumeCommand.Arg("name", "Project name.").Required().String()
+	instancesResumeName    = instancesResumeCommand.Arg("domain", "Instance domain").Required().String()
 
 	instancesScaleUpCommand = instancesCommand.Command("scaleup", "ScaleUp Instance.")
 	instancesScaleUpName    = instancesScaleUpCommand.Arg("name", "Project name.").Required().String()

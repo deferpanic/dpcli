@@ -20,7 +20,7 @@ var (
 type Backups struct{}
 
 func (backups *Backups) Save(name string, domain string) {
-	instance := &Instance{}
+	instance := &OldInstance{}
 	instance.Name = name
 	instance.Domain = domain
 
@@ -38,7 +38,7 @@ func (backups *Backups) Save(name string, domain string) {
 }
 
 func (backups *Backups) Restore(name string, domain string) {
-	instance := &Instance{}
+	instance := &OldInstance{}
 
 	instance.Name = name
 	instance.Domain = domain

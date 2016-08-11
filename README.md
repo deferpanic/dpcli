@@ -24,6 +24,7 @@ pi
 ## Dependencies:
 ```
 go get gopkg.in/alecthomas/kingpin.v2
+go get  github.com/olekukonko/tablewriter
 ```
 
 ## Build
@@ -73,6 +74,12 @@ on doing so in the very near future.
 ### Log of Individual Instance
 ```
 ./dpcli --token="TOKEN" instances log gregory-jennifer.deferpanic.net
+```
+
+### List all Instances
+
+```
+./dpcli --token="TOKEN" instances list
 ```
 
 ### List of Instances attached to Image/Project
