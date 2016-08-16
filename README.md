@@ -252,7 +252,7 @@ To see the available addons:
 
 [Php with Mysql](https://github.com/vsukhin/phprumpmysql)
 
-[Ruby and Sinatra](https://github.com/vsukhin/rubysinatrarump)
+[Ruby and Sinatra](https://github.com/deferpanic/ruby_example)
 
 [Python](https://github.com/deferpanic/python_example)
 
