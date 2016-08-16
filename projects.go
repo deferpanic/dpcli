@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"io/ioutil"
 	"net/url"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -102,19 +104,29 @@ func (projects *Projects) List() {
 		fmt.Println(redBold(err.Error()))
 	} else {
 		fmt.Println(greenBold(pr.Title))
-		fmt.Printf(greenBold("ID\tName\tBuildable\tLanguage\tSource\tBuildStatus\tFilename\tAddon\n"))
+
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetAutoFormatHeaders(false)
+
+		table.SetHeader([]string{greenBold("ID"), greenBold("Name"),
+			greenBold("Buildable"), greenBold("Language"), greenBold("Source"),
+			greenBold("BuildStatus"), greenBold("Filename"), greenBold("Addon")})
 
 		for i := 0; i < len(pr.Projects); i++ {
-			fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\n",
-				pr.Projects[i].ID,
+			sid := strconv.Itoa(pr.Projects[i].ID)
+
+			table.Append([]string{sid,
 				pr.Projects[i].Name,
 				pr.Projects[i].Buildable,
 				pr.Projects[i].Language,
 				pr.Projects[i].Source,
 				pr.Projects[i].BuildStatus,
 				pr.Projects[i].Filename,
-				pr.Projects[i].Addon)
+				pr.Projects[i].Addon,
+			})
 		}
+
+		table.Render()
 	}
 
 }

@@ -57,6 +57,20 @@ var (
 	instancesScaleDownName    = instancesScaleDownCommand.Arg("name", "Project name.").Required().String()
 	instancesScaleDownDomain  = instancesScaleDownCommand.Arg("domain", "Domain").Required().String()
 
+	ipsCommand       = app.Command("ips", "IPs.")
+	ipsAttachCommand = ipsCommand.Command("attach", "Attach IP to Instance")
+	ipsAttachAddress = ipsAttachCommand.Arg("address", "IPV4 Address to attach").Required().String()
+	ipsAttachDomain  = ipsAttachCommand.Arg("domain", "Instance domain to attach to").Required().String()
+
+	ipsDetachCommand = ipsCommand.Command("detach", "Detach IP to Instance")
+	ipsDetachAddress = ipsDetachCommand.Arg("address", "IPV4 Address to detach").Required().String()
+
+	ipsRequestCommand = ipsCommand.Command("request", "Request an IP")
+	ipsReleaseCommand = ipsCommand.Command("release", "Release an IP")
+	ipsReleaseAddress = ipsReleaseCommand.Arg("address", "IPV4 Address to release").Required().String()
+
+	ipsListCommand = ipsCommand.Command("list", "List IPs")
+
 	volumesCommand     = app.Command("volumes", "Volumes.")
 	volumesListCommand = volumesCommand.Command("list", "List volumes")
 	volumesListName    = volumesListCommand.Flag("name", "Project name.").String()
@@ -125,10 +139,10 @@ func setToken() {
 		os.Exit(1)
 	}
 
-	cli = middleware.NewRumpRunCLIImplementation(dtoken)
+	cli = middleware.NewCLIImplementation(dtoken)
 }
 
-var cli *middleware.RumpRunCLIImplementation
+var cli *middleware.CLIImplementation
 
 func main() {
 
@@ -179,6 +193,26 @@ func main() {
 		setToken()
 		instances := &Instances{}
 		instances.Resume(*instancesResumeName)
+	case "ips list":
+		setToken()
+		ips := &Ips{}
+		ips.List()
+	case "ips request":
+		setToken()
+		ips := &Ips{}
+		ips.Request()
+	case "ips release":
+		setToken()
+		ips := &Ips{}
+		ips.Release(*ipsReleaseAddress)
+	case "ips attach":
+		setToken()
+		ips := &Ips{}
+		ips.Attach(*ipsAttachAddress, *ipsAttachDomain)
+	case "ips detach":
+		setToken()
+		ips := &Ips{}
+		ips.Detach(*ipsDetachAddress)
 	case "volumes list":
 		setToken()
 		volumes := &Volumes{}

@@ -1,6 +1,8 @@
 # dpli
 DeferPanic.Net Unikernel IaaS Client
 
+Website: https://deferpanic.com
+
 [![wercker status](https://app.wercker.com/status/44ace461901cac92c53e919de5d7e5e2/s/master "wercker status")](https://app.wercker.com/project/bykey/44ace461901cac92c53e919de5d7e5e2)
 
 You'll need an account so go sign up at https://deferpanic.net/signup .
@@ -16,6 +18,7 @@ pi
 - [Projects](#user-content-projects)
 - [Instances](#user-content-instances)
 - [Volumes](#user-content-volumes)
+- [IPs](#user-content-ips)
 - [Backups](#user-content-backups)
 - [Resources](#user-content-resources)
 - [Addons](#user-content-addons)
@@ -126,6 +129,38 @@ on doing so in the very near future.
 ./dpcli --token="TOKEN" volumes list --name=text
 ```
 
+## IPs
+
+### Request
+
+```
+./dpcli --token="TOKEN" ips request
+```
+
+### Release
+
+```
+./dpcli --token="TOKEN" ips release 1.2.3.4
+```
+
+### Attach
+
+```
+./dpcli --token="TOKEN" ips attach 1.2.3.4 stephen-anna.deferpanic.net
+```
+
+### Detach
+
+```
+./dpcli --token="TOKEN" ips detach 1.2.3.4
+```
+
+### List
+
+```
+./dpcli --token="TOKEN" ips list
+```
+
 ## Backups
 
 ### Save
@@ -209,7 +244,7 @@ To see the available addons:
 
 ## Examples
 
-[Static Website](https://github.com/vsukhin/html)
+[Static Website](https://github.com/deferpanic/html_example)
 
 [Php](https://github.com/vsukhin/phprump)
 
@@ -219,9 +254,13 @@ To see the available addons:
 
 [Ruby and Sinatra](https://github.com/vsukhin/rubysinatrarump)
 
+[Python](https://github.com/deferpanic/python_example)
+
 [Node Js](https://github.com/vsukhin/nodejsrump)
 
 [Go](https://github.com/vsukhin/gorump)
 
 [Go with DeferPanic client](https://github.com/vsukhin/dpexample)
 
+## Developing
+Go 1.6 is Required.
