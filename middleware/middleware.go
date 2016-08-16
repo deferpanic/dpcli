@@ -10,13 +10,13 @@ import (
 	"net/http"
 )
 
-// RumpRunCLIInterface is the interface for making requests to the deferpanic rumprun api
-type RumpRunCLIInterface interface {
+// CLIInterface is the interface for making requests to the deferpanic rumprun api
+type CLIInterface interface {
 	Postit(b []byte, url string) (result string, err error)
 }
 
-// RumpRunCLIImplementation is the base struct for making requests to the deferpanic rumprun api
-type RumpRunCLIImplementation struct {
+// CLIImplementation is the base struct for making requests to the deferpanic rumprun api
+type CLIImplementation struct {
 	Token string
 }
 
@@ -25,11 +25,11 @@ const (
 	httpTooManyRequests = 429
 )
 
-var _ RumpRunCLIInterface = &RumpRunCLIImplementation{}
+var _ CLIInterface = &CLIImplementation{}
 
-// NewRumpRunCLIImplementation instantiates and returns a new deferpanic rumprun cli
-func NewRumpRunCLIImplementation(token string) *RumpRunCLIImplementation {
-	cli := &RumpRunCLIImplementation{
+// NewCLIImplementation instantiates and returns a new deferpanic rumprun cli
+func NewCLIImplementation(token string) *CLIImplementation {
+	cli := &CLIImplementation{
 		Token: token,
 	}
 
@@ -37,7 +37,7 @@ func NewRumpRunCLIImplementation(token string) *RumpRunCLIImplementation {
 }
 
 // Postit posts an api request w/b body to url and sets appropriate headers
-func (c *RumpRunCLIImplementation) Postit(b []byte, url string) (result string, err error) {
+func (c *CLIImplementation) Postit(b []byte, url string) (result string, err error) {
 	defer func() {
 		if rec := recover(); rec != nil {
 			err := fmt.Sprintf("%q", rec)
@@ -89,7 +89,7 @@ func (c *RumpRunCLIImplementation) Postit(b []byte, url string) (result string, 
 }
 
 // GetJSON does a get request and returns json
-func (c *RumpRunCLIImplementation) GetJSON(url string, iface interface{}) (err error) {
+func (c *CLIImplementation) GetJSON(url string, iface interface{}) (err error) {
 	defer func() {
 		if rec := recover(); rec != nil {
 			err := fmt.Sprintf("%q", rec)
@@ -98,6 +98,52 @@ func (c *RumpRunCLIImplementation) GetJSON(url string, iface interface{}) (err e
 	}()
 
 	req, err := http.NewRequest("GET", url, nil)
+	req.Header.Set("DP-APIToken", c.Token)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	defer resp.Body.Close()
+
+	switch resp.StatusCode {
+	case http.StatusBadRequest:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("wrong using of API method")
+	case http.StatusUnauthorized:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("wrong or invalid API token")
+	case http.StatusNotFound:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("API method was not found")
+	case httpTooManyRequests:
+		log.Println("too many requests - you are being rate limited")
+		err = errors.New("too many requests - you are being rate limited")
+	case http.StatusInternalServerError:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("internal service error")
+	case http.StatusServiceUnavailable:
+		log.Println(http.StatusText(resp.StatusCode))
+		err = errors.New("service not available")
+	default:
+	}
+
+	return json.NewDecoder(resp.Body).Decode(iface)
+}
+
+// PostJSON does a POST request and returns JSON
+func (c *CLIImplementation) PostJSON(b []byte, url string, iface interface{}) (err error) {
+	defer func() {
+		if rec := recover(); rec != nil {
+			err := fmt.Sprintf("%q", rec)
+			log.Println(err)
+		}
+	}()
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(b))
 	req.Header.Set("DP-APIToken", c.Token)
 	req.Header.Set("Content-Type", "application/json")
 

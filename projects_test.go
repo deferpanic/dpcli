@@ -44,7 +44,7 @@ func TestProjectsNew(t *testing.T) {
 
 	go http.Serve(l, mux)
 
-	cli = middleware.NewRumpRunCLIImplementation("token")
+	cli = middleware.NewCLIImplementation("token")
 
 	projects := &Projects{}
 
