@@ -5,7 +5,8 @@ var (
 	APIVersion = "v0.1"
 
 	// APIBase is the base url that cli requests goto
-	APIBase = "https://deferpanic.net/" + APIVersion
+	//	APIBase = "https://deferpanic.net/" + APIVersion
+	APIBase = "http://127.0.0.1:3000/" + APIVersion
 
 	// imageURL is the url for image management
 	imageURL = APIBase + "/image"
@@ -27,9 +28,6 @@ var (
 
 	// languagesURL is the url to view system languages
 	languagesURL = systemURL + "/languages"
-
-	// addonsURL is the url to view system addons
-	addonsURL = systemURL + "/addons"
 
 	// builtinsURL is the url to view system builtins
 	builtinsURL = systemURL + "/builtins"

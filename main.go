@@ -116,7 +116,9 @@ var (
 	resourcesListCommand = resourcesCommand.Command("list", "List provisioned resources to project.")
 	resourcesListName    = resourcesListCommand.Arg("project_name", "project_name.").String()
 
-	addonsCommand = app.Command("addons", "Addons.")
+	addonsCommand          = app.Command("addons", "Addons.")
+	addonsAvailableCommand = addonsCommand.Command("available", "List available addons.")
+	addonsListCommand      = addonsCommand.Command("list", "List provisioned addons.")
 
 	status = app.Command("status", "Show Status.")
 )
@@ -274,7 +276,11 @@ func main() {
 		} else {
 			resources.List()
 		}
-	case "addons":
+	case "addons available":
+		setToken()
+		addons := &Addons{}
+		addons.Available()
+	case "addons list":
 		setToken()
 		addons := &Addons{}
 		addons.List()
