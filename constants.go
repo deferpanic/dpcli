@@ -28,9 +28,6 @@ var (
 	// languagesURL is the url to view system languages
 	languagesURL = systemURL + "/languages"
 
-	// addonsURL is the url to view system addons
-	addonsURL = systemURL + "/addons"
-
 	// builtinsURL is the url to view system builtins
 	builtinsURL = systemURL + "/builtins"
 
