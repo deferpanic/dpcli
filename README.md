@@ -5,14 +5,18 @@ Website: https://deferpanic.com
 
 [![wercker status](https://app.wercker.com/status/44ace461901cac92c53e919de5d7e5e2/s/master "wercker status")](https://app.wercker.com/project/bykey/44ace461901cac92c53e919de5d7e5e2)
 
+## Authentication:
+
 You'll need an account so go sign up at https://deferpanic.net/signup .
-Then you can find your API token @ https://deferpanic.net/home/settings
-. Replace all occurences of TOKEN with your token in the examples
-provided below.
+Then you can find your API token @ https://deferpanic.net/home/settings.
 
 You can either pass your token in with the -token flag or you maybe
 stick it in ~/.dprc.
-pi
+
+Example if using the token flag:
+```
+./dpcli --token="TOKEN"
+```
 
 - [Installing](#user-content-build)
 - [Projects](#user-content-projects)
@@ -37,12 +41,10 @@ go build
 
 ## Projects
 
-We currently don't support uploading custom images/volumes but we plan
-on doing so in the very near future.
 
 ### Create from Repository
 ```
-./dpcli --token="TOKEN" projects new myproject php https://github.com/vsukhin/phprump
+./dpcli projects new myproject php https://github.com/deferpanic/php_example
 ```
 
 ### Create from Image Binary
@@ -64,6 +66,12 @@ on doing so in the very near future.
 
 ```
 ./dpcli --token="TOKEN" projects log myproject
+```
+
+### Download image
+
+```
+./dpcli projects download myproject
 ```
 
 ## Instances
@@ -126,8 +134,15 @@ on doing so in the very near future.
 ### List by Image Name
 
 ```
-./dpcli --token="TOKEN" volumes list --name=text
+./dpcli volumes list --name=text
 ```
+
+### Download Volume
+```
+./dpcli volumes download id
+```
+
+Note: To download a volume you currently need to pause the instance but we are fixing this soon.
 
 ## IPs
 
@@ -246,7 +261,7 @@ To see the available addons:
 
 [Static Website](https://github.com/deferpanic/html_example)
 
-[Php](https://github.com/vsukhin/phprump)
+[Php](https://github.com/deferpanic/php_example)
 
 [Php with Redis](https://github.com/vsukhin/phprumpredis)
 
@@ -258,7 +273,7 @@ To see the available addons:
 
 [Node Js](https://github.com/vsukhin/nodejsrump)
 
-[Go](https://github.com/vsukhin/gorump)
+[Go](https://github.com/deferpanic/go_example)
 
 [Go with DeferPanic client](https://github.com/vsukhin/dpexample)
 

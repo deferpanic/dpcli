@@ -3,9 +3,34 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/olekukonko/tablewriter"
 	"os"
+	"strconv"
 )
 
+type Volume struct {
+	ID         int
+	Name       string
+	MountPoint string
+	Filename   string
+	ProjectId  int
+	Size       string
+	InstanceId int
+	Orphaned   bool
+	Attached   bool
+	Mutable    bool
+	FileSystem string
+	System     bool
+	CreatedAt  string
+}
+
+type VolumesResponse struct {
+	Title   string
+	Error   string
+	Volumes []Volume
+}
+
+//FIXME -- get rid of all this crap
 var (
 
 	// URL is the url for volume management
@@ -27,15 +52,14 @@ var (
 	// listvolumesURL is the url to list all rumprun image volumes
 	listvolumesURL = volumeURL + "/list"
 
-	// getvolumeURL is the url to download rumprun image volume
-	getvolumeURL = volumeURL + "/get"
-
 	// putvolumeURL is the url to upload rumprun image volume
 	putvolumeURL = volumeURL + "/put"
 )
 
-// Volume is the base struct for management of volumes
-type Volume struct {
+// OldVolume is the base struct for management of volumes
+// DEPRECATED
+type OldVolume struct {
+	Id         int    `json:"ID"`
 	Name       string `json:"Name"`
 	Owner      string `json:"Owner"`
 	Domain     string `json:"Domain"`
@@ -45,37 +69,75 @@ type Volume struct {
 
 type Volumes struct{}
 
+// ListByName lists volumes that are within a project by name
 func (volumes *Volumes) ListByName(name string) {
-	volume := &Volume{}
+	volume := &OldVolume{}
 	volume.Owner = name
 
 	volumes.List(volume)
 }
 
+// ListByDomain lists volumes attached to a given domain
 func (volumes *Volumes) ListByDomain(domain string) {
-	volume := &Volume{}
+	volume := &OldVolume{}
 	volume.Domain = domain
 
 	volumes.List(volume)
 }
 
-func (volumes *Volumes) List(volume *Volume) {
+// List lists volumes
+func (volumes *Volumes) List(volume *OldVolume) {
 	b, err := json.Marshal(volume)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, APIBase+"/volume/list")
+	vr := VolumesResponse{}
+	err = cli.PostJSON(b, APIBase+"/volume/list", &vr)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(redBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(greenBold(vr.Title))
+
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetAutoFormatHeaders(false)
+
+		table.SetHeader([]string{greenBold("ID"), greenBold("Name"),
+			greenBold("Mount Point"), greenBold("Filename"), greenBold("ProjectID"),
+			greenBold("Size"), greenBold("InstanceId"), greenBold("Orphaned"),
+			greenBold("Attached"), greenBold("Mutable"), greenBold("FileSystem"),
+			greenBold("System"), greenBold("CreatedAt"),
+		})
+
+		for i := 0; i < len(vr.Volumes); i++ {
+			sid := strconv.Itoa(vr.Volumes[i].ID)
+			pid := strconv.Itoa(vr.Volumes[i].ProjectId)
+			iid := strconv.Itoa(vr.Volumes[i].InstanceId)
+			table.Append([]string{sid,
+				vr.Volumes[i].Name,
+				vr.Volumes[i].MountPoint,
+				vr.Volumes[i].Filename,
+				pid,
+				vr.Volumes[i].Size,
+				iid,
+				strconv.FormatBool(vr.Volumes[i].Orphaned),
+				strconv.FormatBool(vr.Volumes[i].Attached),
+				strconv.FormatBool(vr.Volumes[i].Mutable),
+				vr.Volumes[i].FileSystem,
+				strconv.FormatBool(vr.Volumes[i].System),
+				vr.Volumes[i].CreatedAt,
+			})
+		}
+
+		table.Render()
 	}
+
 }
 
+// Attach attaches a volume from a project
 func (volumes *Volumes) Attach(name string, domain string) {
-	volume := &Volume{}
+	volume := &OldVolume{}
 	volume.Name = name
 	volume.Domain = domain
 
@@ -93,8 +155,9 @@ func (volumes *Volumes) Attach(name string, domain string) {
 
 }
 
+// Detach detaches a volume from a project
 func (volumes *Volumes) Detach(name string, domain string) {
-	volume := &Volume{}
+	volume := &OldVolume{}
 	volume.Name = name
 	volume.Domain = domain
 
@@ -109,6 +172,19 @@ func (volumes *Volumes) Detach(name string, domain string) {
 		fmt.Println(redBold(response))
 	} else {
 		fmt.Println(greenBold(response))
+	}
+
+}
+
+// Downloads a volume by id
+// FIXME
+func (volumes *Volumes) Download(id int) {
+
+	err := cli.GrabFile(nil, volumeURL+"/get/"+strconv.Itoa(id), "vol"+strconv.Itoa(id))
+	if err != nil {
+		fmt.Println(redBold(err.Error()))
+	} else {
+		fmt.Println(greenBold("file saved"))
 	}
 
 }

@@ -150,8 +150,7 @@ func (projects *Projects) Log(name string) {
 
 }
 
-// Download downloads everything in a project
-// {image, volumes, deferpanic.yml if present
+// Download a project root image
 func (projects *Projects) Download(name string) {
 
 	image := &Image{}
@@ -162,11 +161,11 @@ func (projects *Projects) Download(name string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, getURL)
+	err = cli.GrabFile(b, imageURL+"/get", name)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(redBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(greenBold("file saved"))
 	}
 
 }

@@ -6,6 +6,7 @@ var (
 
 	// APIBase is the base url that cli requests goto
 	APIBase = "https://deferpanic.net/" + APIVersion
+	//APIBase = "http://127.0.0.1:3000/" + APIVersion
 
 	// imageURL is the url for image management
 	imageURL = APIBase + "/image"
@@ -18,9 +19,6 @@ var (
 
 	// systemURL is the url for system management
 	systemURL = APIBase + "/system"
-
-	// getURL is the url to download rumprun image binary
-	getURL = imageURL + "/get"
 
 	// putURL is the url to upload rumprun image binary
 	putURL = imageURL + "/put"
