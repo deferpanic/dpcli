@@ -186,3 +186,45 @@ func (projects *Projects) Upload(name string, binary string) {
 	}
 
 }
+
+type ManifestVolume struct {
+	Id    int
+	File  string
+	Mount string
+}
+
+type ManifestProcess struct {
+	Memory  int
+	Kernel  string
+	Cmdline string
+	Env     string
+	Volumes []ManifestVolume
+}
+
+type Manifest struct {
+	Processes []ManifestProcess
+}
+
+// Manifest is a json representation for your project
+// useful for running things locally
+func (projects *Projects) Manifest(name string) {
+	m := Manifest{}
+	err := cli.GetJSON(APIBase+"/projects/manifest/"+name, &m)
+	if err != nil {
+		fmt.Println(redBold(err.Error()))
+		return
+	}
+
+	// dupey-dupe
+	js, err := json.Marshal(m)
+	if err != nil {
+		fmt.Println(redBold(err.Error()))
+		return
+	}
+
+	err = ioutil.WriteFile(name+".manifest", js, 0644)
+	if err != nil {
+		fmt.Println(redBold(err.Error()))
+	}
+
+}

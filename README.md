@@ -36,7 +36,7 @@ go get  github.com/olekukonko/tablewriter
 
 ## Build
 ```
-go build
+go build && go install
 ```
 
 ## Projects
@@ -44,28 +44,32 @@ go build
 
 ### Create from Repository
 ```
-./dpcli projects new myproject php https://github.com/deferpanic/php_example
+dpcli projects new myproject php https://github.com/deferpanic/php_example
 ```
 
 ### Create from Image Binary
 ```
 ```
 
+### Fork an Existing Project
+
+### Clone an Addon
+
 ### Remove
 ```
-./dpcli --token="TOKEN" projects delete myproject
+dpcli projects delete myproject
 ```
 
 ### List
 
 ```
-./dpcli --token="TOKEN" projects list
+dpcli projects list
 ```
 
 ### View Log
 
 ```
-./dpcli --token="TOKEN" projects log myproject
+dpcli projects log myproject
 ```
 
 ### Download image
@@ -74,53 +78,59 @@ go build
 ./dpcli projects download myproject
 ```
 
+### Download manifest
+
+```
+./dpcli projects manifest myproject
+```
+
 ## Instances
 
 ### Create
 
 ```
-./dpcli --token="TOKEN" instances new myproject
+./dpcli instances new myproject
 ```
 
 ### Log of Individual Instance
 ```
-./dpcli --token="TOKEN" instances log gregory-jennifer.deferpanic.net
+./dpcli instances log gregory-jennifer.deferpanic.net
 ```
 
 ### List all Instances
 
 ```
-./dpcli --token="TOKEN" instances list
+./dpcli instances list
 ```
 
 ### List of Instances attached to Image/Project
 
 ```
-./dpcli --token="TOKEN" instances list myproject
+./dpcli instances list myproject
 ```
 
 ### Pause
 
 ```
-./dpcli --token="TOKEN" instances pause gregory-jennifer.deferpanic.net
+./dpcli instances pause gregory-jennifer.deferpanic.net
 ```
 
 ### Resume
 
 ```
-./dpcli --token="TOKEN" instances resume gregory-jennifer.deferpanic.net
+./dpcli instances resume gregory-jennifer.deferpanic.net
 ```
 
 ### ScaleUp
 
 ```
-./dpcli --token="TOKEN" instances scaleup myproject
+./dpcli instances scaleup myproject
 ```
 
 ### ScaleDown
 
 ```
-./dpcli --token="TOKEN" instances scaledown myproject gregory-jennifer.deferpanic.net
+./dpcli instances scaledown myproject gregory-jennifer.deferpanic.net
 ```
 
 ## Volumes
@@ -128,7 +138,7 @@ go build
 ### List By Domain
 
 ```
-./dpcli --token="TOKEN" volumes list --domain=stephen-anna.deferpanic.net
+./dpcli volumes list --domain=stephen-anna.deferpanic.net
 ```
 
 ### List by Image Name
@@ -138,42 +148,49 @@ go build
 ```
 
 ### Download Volume
+
+Note: To download a volume you currently need to pause the instance.
+(Live volume streaming coming soon.)
+
+Pause the instance
+```
+./dpcli instances pause my_cname.deferpanic.net
+```
+
 ```
 ./dpcli volumes download id
 ```
-
-Note: To download a volume you currently need to pause the instance but we are fixing this soon.
 
 ## IPs
 
 ### Request
 
 ```
-./dpcli --token="TOKEN" ips request
+./dpcli ips request
 ```
 
 ### Release
 
 ```
-./dpcli --token="TOKEN" ips release 1.2.3.4
+./dpcli ips release 1.2.3.4
 ```
 
 ### Attach
 
 ```
-./dpcli --token="TOKEN" ips attach 1.2.3.4 stephen-anna.deferpanic.net
+./dpcli ips attach 1.2.3.4 stephen-anna.deferpanic.net
 ```
 
 ### Detach
 
 ```
-./dpcli --token="TOKEN" ips detach 1.2.3.4
+./dpcli ips detach 1.2.3.4
 ```
 
 ### List
 
 ```
-./dpcli --token="TOKEN" ips list
+./dpcli ips list
 ```
 
 ## Backups
@@ -183,30 +200,30 @@ Note: To download a volume you currently need to pause the instance but we are f
 Pause the instance
 (Live Backups coming soon.)
 ```
-./dpcli --token="TOKEN" instances pause gregory-jennifer.deferpanic.net
+./dpcli instances pause gregory-jennifer.deferpanic.net
 ```
 
 Back it up
 ```
-./dpcli --token="TOKEN" backups save myproject gregory-jennifer.deferpanic.net
+./dpcli backups save myproject gregory-jennifer.deferpanic.net
 ```
 
 ### Restore
 
 Pause the instance
 ```
-./dpcli --token="TOKEN" instances pause gregory-jennifer.deferpanic.net
+./dpcli instances pause gregory-jennifer.deferpanic.net
 ```
 
 Back it up
 ```
-./dpcli --token="TOKEN" backups restore myproject gregory-jennifer.deferpanic.net
+./dpcli backups restore myproject gregory-jennifer.deferpanic.net
 ```
 
 ### List
 
 ```
-./dpcli --token="TOKEN" backups list
+./dpcli backups list
 ```
 
 ## Languages
@@ -214,7 +231,7 @@ Back it up
 ### List
 
 ```
-./dpcli --token="TOKEN" languages
+./dpcli languages
 ```
 
 ## Resources
@@ -225,12 +242,12 @@ Back it up
 
 To see all your provisioned resources:
 ```
-./dpcli --token="TOKEN" resources list
+./dpcli resources list
 ```
 
 To see the resources attached to a given project:
 ```
-./dpcli --token="TOKEN" resources list myproject
+./dpcli resources list myproject
 ```
 
 ### Available
@@ -244,16 +261,17 @@ To see the available resources:
 
 To see the available addons:
 ```
-./dpcli --token="TOKEN" addons
+dpcli --token="TOKEN" addons
 ```
 
 ## Status
 ```
-./dpcli status
+dpcli status
 ```
 
 ## Version
 ```
+dpcli version
 ```
 
 

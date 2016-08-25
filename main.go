@@ -36,6 +36,9 @@ var (
 	projectsLogCommand  = projectsCommand.Command("log", "View Project Build Log")
 	projectsLogName     = projectsLogCommand.Arg("name", "Project name.").Required().String()
 
+	projectsManifestCommand = projectsCommand.Command("manifest", "Project manifest.")
+	projectsManifestName    = projectsManifestCommand.Arg("name", "Project name.").Required().String()
+
 	instancesCommand    = app.Command("instances", "Instances.")
 	instancesNewCommand = instancesCommand.Command("new", "Create a new instance.")
 	instancesNewName    = instancesNewCommand.Arg("name", "Project name.").Required().String()
@@ -172,6 +175,10 @@ func main() {
 		setToken()
 		projects := &Projects{}
 		projects.List()
+	case "projects manifest":
+		setToken()
+		projects := &Projects{}
+		projects.Manifest(*projectsManifestName)
 	case "projects log":
 		setToken()
 		projects := &Projects{}

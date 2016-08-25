@@ -6,7 +6,6 @@ var (
 
 	// APIBase is the base url that cli requests goto
 	APIBase = "https://deferpanic.net/" + APIVersion
-	//APIBase = "http://127.0.0.1:3000/" + APIVersion
 
 	// imageURL is the url for image management
 	imageURL = APIBase + "/image"
