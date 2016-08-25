@@ -13,8 +13,9 @@ import (
 var (
 	app = kingpin.New("dpcli", "Tooling to interact with DeferPanic IaaS")
 
-	token       = app.Flag("token", "Token").String()
-	interactive = app.Flag("interactive", "Disable interactive mode .").Bool()
+	token          = app.Flag("token", "Token").String()
+	interactive    = app.Flag("interactive", "Disable interactive mode .").Bool()
+	versionCommand = app.Command("version", "Version")
 
 	projectsCommand     = app.Command("projects", "Projects.")
 	projectsNewCommand  = projectsCommand.Command("new", "Create a new project.")
@@ -27,6 +28,7 @@ var (
 	projectsDeleteName    = projectsDeleteCommand.Arg("name", "Project name.").Required().String()
 
 	projectsDownloadCommand = projectsCommand.Command("download", "Download image.")
+	projectsDownloadName    = projectsDownloadCommand.Arg("name", "Project name.").Required().String()
 	projectsUploadCommand   = projectsCommand.Command("upload", "Upload image.")
 	projectsUploadBinary    = projectsUploadCommand.Arg("binary", "Image binary path.").Required().String()
 
@@ -90,6 +92,7 @@ var (
 	volumesDetachDomain  = volumesDetachCommand.Flag("domain", "Domain.").String()
 
 	volumesDownloadCommand = volumesCommand.Command("download", "Download Volume")
+	volumesDownloadID      = volumesDownloadCommand.Arg("id", "Volume id.").Required().Int()
 	volumesUploadCommand   = volumesCommand.Command("upload", "Upload Volume")
 
 	backupsCommand     = app.Command("backups", "Backups.")
@@ -151,6 +154,8 @@ func main() {
 	kingpin.Version("0.0.1")
 
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	case "version":
+		fmt.Println("0.0.1")
 	case "projects new":
 		setToken()
 		projects := &Projects{}
@@ -159,6 +164,10 @@ func main() {
 		setToken()
 		projects := &Projects{}
 		projects.Delete(*projectsDeleteName)
+	case "projects download":
+		setToken()
+		projects := &Projects{}
+		projects.Download(*projectsDownloadName)
 	case "projects list":
 		setToken()
 		projects := &Projects{}
@@ -242,6 +251,8 @@ func main() {
 		volumes.Detach(*volumesAttachName, *volumesAttachDomain)
 	case "volumes download":
 		setToken()
+		volumes := &Volumes{}
+		volumes.Download(*volumesDownloadID)
 	case "volumes upload":
 		setToken()
 	case "backups list":

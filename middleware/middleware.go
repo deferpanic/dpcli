@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 // CLIInterface is the interface for making requests to the deferpanic rumprun api
@@ -178,4 +180,62 @@ func (c *CLIImplementation) PostJSON(b []byte, url string, iface interface{}) (e
 	}
 
 	return json.NewDecoder(resp.Body).Decode(iface)
+}
+
+// GrabFile downloads to location
+// TODO - refactor me
+func (c *CLIImplementation) GrabFile(b []byte, url string, fname string) (err error) {
+	defer func() {
+		if rec := recover(); rec != nil {
+			err := fmt.Sprintf("%q", rec)
+			log.Println(err)
+		}
+	}()
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(b))
+	req.Header.Set("DP-APIToken", c.Token)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	defer resp.Body.Close()
+
+	sz := resp.Header.Get("Content-Length")
+	fmt.Println("\033[1;32msaving download " + sz + " bytes to " + fname + "\033[0m")
+
+	out, err := os.Create(fname)
+	defer out.Close()
+
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		log.Println(err)
+	}
+
+	switch resp.StatusCode {
+	case http.StatusBadRequest:
+		log.Println(http.StatusText(resp.StatusCode))
+		return errors.New("wrong using of API method")
+	case http.StatusUnauthorized:
+		log.Println(http.StatusText(resp.StatusCode))
+		return errors.New("wrong or invalid API token")
+	case http.StatusNotFound:
+		log.Println(http.StatusText(resp.StatusCode))
+		return errors.New("API method was not found")
+	case httpTooManyRequests:
+		log.Println("too many requests - you are being rate limited")
+		return errors.New("too many requests - you are being rate limited")
+	case http.StatusInternalServerError:
+		log.Println(http.StatusText(resp.StatusCode))
+		return errors.New("internal service error")
+	case http.StatusServiceUnavailable:
+		log.Println(http.StatusText(resp.StatusCode))
+		return errors.New("service not available")
+	default:
+		return nil
+	}
+
 }
