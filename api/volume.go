@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -94,20 +94,20 @@ func (volumes *Volumes) List(volume *OldVolume) {
 	}
 
 	vr := VolumesResponse{}
-	err = cli.PostJSON(b, APIBase+"/volume/list", &vr)
+	err = Cli.PostJSON(b, APIBase+"/volume/list", &vr)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(vr.Title))
+		fmt.Println(GreenBold(vr.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 
-		table.SetHeader([]string{greenBold("ID"), greenBold("Name"),
-			greenBold("Mount Point"), greenBold("Filename"), greenBold("ProjectID"),
-			greenBold("Size"), greenBold("InstanceId"), greenBold("Orphaned"),
-			greenBold("Attached"), greenBold("Mutable"), greenBold("FileSystem"),
-			greenBold("System"), greenBold("CreatedAt"),
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("Name"),
+			GreenBold("Mount Point"), GreenBold("Filename"), GreenBold("ProjectID"),
+			GreenBold("Size"), GreenBold("InstanceId"), GreenBold("Orphaned"),
+			GreenBold("Attached"), GreenBold("Mutable"), GreenBold("FileSystem"),
+			GreenBold("System"), GreenBold("CreatedAt"),
 		})
 
 		for i := 0; i < len(vr.Volumes); i++ {
@@ -146,11 +146,11 @@ func (volumes *Volumes) Attach(name string, domain string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	response, err := cli.Postit(b, connectvolumeURL)
+	response, err := Cli.Postit(b, connectvolumeURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -167,11 +167,11 @@ func (volumes *Volumes) Detach(name string, domain string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, disconnectvolumeURL)
+	response, err := Cli.Postit(b, disconnectvolumeURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -180,11 +180,11 @@ func (volumes *Volumes) Detach(name string, domain string) {
 // FIXME
 func (volumes *Volumes) Download(id int) {
 
-	err := cli.GrabFile(nil, volumeURL+"/get/"+strconv.Itoa(id), "vol"+strconv.Itoa(id))
+	err := Cli.GrabFile(nil, volumeURL+"/get/"+strconv.Itoa(id), "vol"+strconv.Itoa(id))
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold("file saved"))
+		fmt.Println(GreenBold("file saved"))
 	}
 
 }

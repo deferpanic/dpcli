@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -21,16 +21,16 @@ type Languages struct{}
 
 func (languages *Languages) List() {
 	lr := LanguagesResponse{}
-	err := cli.GetJSON(languagesURL, &lr)
+	err := Cli.GetJSON(languagesURL, &lr)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(lr.Title))
+		fmt.Println(GreenBold(lr.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("Name")})
+		table.SetHeader([]string{GreenBold("Name")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(lr.Languages); i++ {

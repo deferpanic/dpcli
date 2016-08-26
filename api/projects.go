@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -35,11 +35,11 @@ func (projects *Projects) New(name string, language string, source string, scrip
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, APIBase+"/image/new")
+	response, err := Cli.Postit(b, APIBase+"/image/new")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 }
 
@@ -54,11 +54,11 @@ func (projects *Projects) Delete(name string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, APIBase+"/image/remove")
+	response, err := Cli.Postit(b, APIBase+"/image/remove")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 }
 
@@ -69,11 +69,11 @@ func (projects *Projects) NewFromImage(name string, imagePath string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	response, err := cli.Postit(data, putURL+"/"+url.QueryEscape(name))
+	response, err := Cli.Postit(data, putURL+"/"+url.QueryEscape(name))
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -99,18 +99,18 @@ type ProjectsResponse struct {
 // List lists all your projects
 func (projects *Projects) List() {
 	pr := ProjectsResponse{}
-	err := cli.GetJSON(APIBase+"/image/display", &pr)
+	err := Cli.GetJSON(APIBase+"/image/display", &pr)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(pr.Title))
+		fmt.Println(GreenBold(pr.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 
-		table.SetHeader([]string{greenBold("ID"), greenBold("Name"),
-			greenBold("Buildable"), greenBold("Language"), greenBold("Source"),
-			greenBold("BuildStatus"), greenBold("Filename"), greenBold("Addon")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("Name"),
+			GreenBold("Buildable"), GreenBold("Language"), GreenBold("Source"),
+			GreenBold("BuildStatus"), GreenBold("Filename"), GreenBold("Addon")})
 
 		for i := 0; i < len(pr.Projects); i++ {
 			sid := strconv.Itoa(pr.Projects[i].ID)
@@ -141,11 +141,11 @@ func (projects *Projects) Log(name string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	response, err := cli.Postit(b, APIBase+"/image/makelog")
+	response, err := Cli.Postit(b, APIBase+"/image/makelog")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -161,11 +161,11 @@ func (projects *Projects) Download(name string) {
 		os.Exit(1)
 	}
 
-	err = cli.GrabFile(b, imageURL+"/get", name)
+	err = Cli.GrabFile(b, imageURL+"/get", name)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold("file saved"))
+		fmt.Println(GreenBold("file saved"))
 	}
 
 }
@@ -178,11 +178,11 @@ func (projects *Projects) Upload(name string, binary string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(data, putURL+"/"+url.QueryEscape(name))
+	response, err := Cli.Postit(data, putURL+"/"+url.QueryEscape(name))
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -209,22 +209,22 @@ type Manifest struct {
 // useful for running things locally
 func (projects *Projects) Manifest(name string) {
 	m := Manifest{}
-	err := cli.GetJSON(APIBase+"/projects/manifest/"+name, &m)
+	err := Cli.GetJSON(APIBase+"/projects/manifest/"+name, &m)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 		return
 	}
 
 	// dupey-dupe
 	js, err := json.Marshal(m)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 		return
 	}
 
 	err = ioutil.WriteFile(name+".manifest", js, 0644)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	}
 
 }

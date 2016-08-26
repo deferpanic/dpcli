@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -69,11 +69,11 @@ func (instances *Instances) New(name string) {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	response, err := cli.Postit(b, scaleupURL)
+	response, err := Cli.Postit(b, scaleupURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -87,11 +87,11 @@ func (instances *Instances) Log(domain string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, runlogURL)
+	response, err := Cli.Postit(b, runlogURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -107,18 +107,18 @@ func (instances *Instances) List(name string) {
 	}
 
 	ir := InstancesResponse{}
-	err := cli.GetJSON(url, &ir)
+	err := Cli.GetJSON(url, &ir)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ir.Title))
+		fmt.Println(GreenBold(ir.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("Domain"),
-			greenBold("NetworkID"), greenBold("Memory"), greenBold("Disk"),
-			greenBold("Status"), greenBold("Running"), greenBold("StartedAt")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("Domain"),
+			GreenBold("NetworkID"), GreenBold("Memory"), GreenBold("Disk"),
+			GreenBold("Status"), GreenBold("Running"), GreenBold("StartedAt")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ir.Instances); i++ {
@@ -153,11 +153,11 @@ func (instances *Instances) Pause(domain string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, pauseURL)
+	response, err := Cli.Postit(b, pauseURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -172,11 +172,11 @@ func (instances *Instances) Resume(domain string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, resumeURL)
+	response, err := Cli.Postit(b, resumeURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 }
 
@@ -195,11 +195,11 @@ func (instances *Instances) ScaleUp(name string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, scaleupURL)
+	response, err := Cli.Postit(b, scaleupURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 }
 
@@ -218,11 +218,11 @@ func (instances *Instances) ScaleDown(name string, domain string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, scaledownURL)
+	response, err := Cli.Postit(b, scaledownURL)
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }

@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -30,19 +30,19 @@ type Ips struct{}
 func (ips *Ips) List() {
 	url := APIBase + "/ippool/list"
 	ir := IPResponse{}
-	err := cli.GetJSON(url, &ir)
+	err := Cli.GetJSON(url, &ir)
 
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ir.Title))
+		fmt.Println(GreenBold(ir.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("IP"),
-			greenBold("Network"), greenBold("Mask"), greenBold("Gateway"),
-			greenBold("Attached"), greenBold("InstanceID")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("IP"),
+			GreenBold("Network"), GreenBold("Mask"), GreenBold("Gateway"),
+			GreenBold("Attached"), GreenBold("InstanceID")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ir.IPs); i++ {
@@ -83,19 +83,19 @@ func (ips *Ips) Attach(ipv4 string, domain string) {
 
 	url := APIBase + "/ip/connect"
 	ir := IPResponse{}
-	err = cli.PostJSON(b, url, &ir)
+	err = Cli.PostJSON(b, url, &ir)
 
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ir.Title))
+		fmt.Println(GreenBold(ir.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("IP"),
-			greenBold("Network"), greenBold("Mask"), greenBold("Gateway"),
-			greenBold("Attached"), greenBold("InstanceID")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("IP"),
+			GreenBold("Network"), GreenBold("Mask"), GreenBold("Gateway"),
+			GreenBold("Attached"), GreenBold("InstanceID")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ir.IPs); i++ {
@@ -135,19 +135,19 @@ func (ips *Ips) Detach(ipv4 string) {
 
 	url := APIBase + "/ip/disconnect"
 	ir := IPResponse{}
-	err = cli.PostJSON(b, url, &ir)
+	err = Cli.PostJSON(b, url, &ir)
 
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ir.Title))
+		fmt.Println(GreenBold(ir.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("IP"),
-			greenBold("Network"), greenBold("Mask"), greenBold("Gateway"),
-			greenBold("Attached"), greenBold("InstanceID")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("IP"),
+			GreenBold("Network"), GreenBold("Mask"), GreenBold("Gateway"),
+			GreenBold("Attached"), GreenBold("InstanceID")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ir.IPs); i++ {
@@ -174,19 +174,19 @@ func (ips *Ips) Detach(ipv4 string) {
 func (ips *Ips) Request() {
 	url := APIBase + "/ippool/request"
 	ir := IPResponse{}
-	err := cli.GetJSON(url, &ir)
+	err := Cli.GetJSON(url, &ir)
 
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ir.Title))
+		fmt.Println(GreenBold(ir.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("IP"),
-			greenBold("Network"), greenBold("Mask"), greenBold("Gateway"),
-			greenBold("Attached"), greenBold("InstanceID")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("IP"),
+			GreenBold("Network"), GreenBold("Mask"), GreenBold("Gateway"),
+			GreenBold("Attached"), GreenBold("InstanceID")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ir.IPs); i++ {
@@ -226,19 +226,19 @@ func (ips *Ips) Release(ipv4 string) {
 
 	url := APIBase + "/ippool/return"
 	ir := IPResponse{}
-	err = cli.PostJSON(b, url, &ir)
+	err = Cli.PostJSON(b, url, &ir)
 
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ir.Title))
+		fmt.Println(GreenBold(ir.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("IP"),
-			greenBold("Network"), greenBold("Mask"), greenBold("Gateway"),
-			greenBold("Attached"), greenBold("InstanceID")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("IP"),
+			GreenBold("Network"), GreenBold("Mask"), GreenBold("Gateway"),
+			GreenBold("Attached"), GreenBold("InstanceID")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ir.IPs); i++ {

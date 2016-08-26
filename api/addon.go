@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -39,17 +39,17 @@ type AddonsAvailableResponse struct {
 func (addons *Addons) Available() {
 
 	ar := AddonsAvailableResponse{}
-	err := cli.GetJSON(APIBase+"/addons/available", &ar)
+	err := Cli.GetJSON(APIBase+"/addons/available", &ar)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ar.Title))
+		fmt.Println(GreenBold(ar.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("Name"),
-			greenBold("Description")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("Name"),
+			GreenBold("Description")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ar.AddonsAvailable); i++ {
@@ -69,17 +69,17 @@ func (addons *Addons) Available() {
 // List lists the addons provisioned to the user
 func (addons *Addons) List() {
 	ar := AddonsResponse{}
-	err := cli.GetJSON(APIBase+"/addons/list", &ar)
+	err := Cli.GetJSON(APIBase+"/addons/list", &ar)
 	if err != nil {
-		fmt.Println(redBold(err.Error()))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(greenBold(ar.Title))
+		fmt.Println(GreenBold(ar.Title))
 
 		table := tablewriter.NewWriter(os.Stdout)
 		table.SetAutoFormatHeaders(false)
 		// FIXME - override headers
-		table.SetHeader([]string{greenBold("ID"), greenBold("Name"),
-			greenBold("Addon"), greenBold("BuildStatus"), greenBold("Created At")})
+		table.SetHeader([]string{GreenBold("ID"), GreenBold("Name"),
+			GreenBold("Addon"), GreenBold("BuildStatus"), GreenBold("Created At")})
 
 		// FIXME - auto-format
 		for i := 0; i < len(ar.Addons); i++ {

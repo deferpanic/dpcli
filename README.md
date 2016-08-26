@@ -36,7 +36,7 @@ go get  github.com/olekukonko/tablewriter
 
 ## Build
 ```
-go build && go install
+cd dpcli && go build && go install
 ```
 
 ## Projects

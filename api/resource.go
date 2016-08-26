@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -28,22 +28,22 @@ func (resources *Resources) New(name string, owner string, builtin string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, APIBase+"/resource/new")
+	response, err := Cli.Postit(b, APIBase+"/resource/new")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
 
 // Available lists the resources available
 func (resources *Resources) Available() {
-	response, err := cli.Postit(nil, systemURL+"/resources")
+	response, err := Cli.Postit(nil, systemURL+"/resources")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 }
 
@@ -57,11 +57,11 @@ func (resources *Resources) List() {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, APIBase+"/resource/list")
+	response, err := Cli.Postit(b, APIBase+"/resource/list")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
@@ -77,11 +77,11 @@ func (resources *Resources) ListByName(name string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, APIBase+"/resource/list")
+	response, err := Cli.Postit(b, APIBase+"/resource/list")
 	if err != nil {
-		fmt.Println(redBold(response))
+		fmt.Println(RedBold(response))
 	} else {
-		fmt.Println(greenBold(response))
+		fmt.Println(GreenBold(response))
 	}
 
 }
