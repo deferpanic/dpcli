@@ -1,4 +1,4 @@
-package middleware
+package api
 
 import (
 	"bytes"
@@ -12,13 +12,17 @@ import (
 	"os"
 )
 
-// CLIInterface is the interface for making requests to the deferpanic rumprun api
-type CLIInterface interface {
+var _ CliInterface = &CliImplementation{}
+
+var Cli *CliImplementation
+
+// CliInterface is the interface for making requests to the deferpanic rumprun api
+type CliInterface interface {
 	Postit(b []byte, url string) (result string, err error)
 }
 
-// CLIImplementation is the base struct for making requests to the deferpanic rumprun api
-type CLIImplementation struct {
+// CliImplementation is the base struct for making requests to the deferpanic rumprun api
+type CliImplementation struct {
 	Token string
 }
 
@@ -27,11 +31,9 @@ const (
 	httpTooManyRequests = 429
 )
 
-var _ CLIInterface = &CLIImplementation{}
-
-// NewCLIImplementation instantiates and returns a new deferpanic rumprun cli
-func NewCLIImplementation(token string) *CLIImplementation {
-	cli := &CLIImplementation{
+// NewCliImplementation instantiates and returns a new deferpanic rumprun cli
+func NewCliImplementation(token string) *CliImplementation {
+	cli := &CliImplementation{
 		Token: token,
 	}
 
@@ -39,7 +41,7 @@ func NewCLIImplementation(token string) *CLIImplementation {
 }
 
 // Postit posts an api request w/b body to url and sets appropriate headers
-func (c *CLIImplementation) Postit(b []byte, url string) (result string, err error) {
+func (c *CliImplementation) Postit(b []byte, url string) (result string, err error) {
 	defer func() {
 		if rec := recover(); rec != nil {
 			err := fmt.Sprintf("%q", rec)
@@ -91,7 +93,7 @@ func (c *CLIImplementation) Postit(b []byte, url string) (result string, err err
 }
 
 // GetJSON does a get request and returns json
-func (c *CLIImplementation) GetJSON(url string, iface interface{}) (err error) {
+func (c *CliImplementation) GetJSON(url string, iface interface{}) (err error) {
 	defer func() {
 		if rec := recover(); rec != nil {
 			err := fmt.Sprintf("%q", rec)
@@ -137,7 +139,7 @@ func (c *CLIImplementation) GetJSON(url string, iface interface{}) (err error) {
 }
 
 // PostJSON does a POST request and returns JSON
-func (c *CLIImplementation) PostJSON(b []byte, url string, iface interface{}) (err error) {
+func (c *CliImplementation) PostJSON(b []byte, url string, iface interface{}) (err error) {
 	defer func() {
 		if rec := recover(); rec != nil {
 			err := fmt.Sprintf("%q", rec)
@@ -184,7 +186,7 @@ func (c *CLIImplementation) PostJSON(b []byte, url string, iface interface{}) (e
 
 // GrabFile downloads to location
 // TODO - refactor me
-func (c *CLIImplementation) GrabFile(b []byte, url string, fname string) (err error) {
+func (c *CliImplementation) GrabFile(b []byte, url string, fname string) (err error) {
 	defer func() {
 		if rec := recover(); rec != nil {
 			err := fmt.Sprintf("%q", rec)

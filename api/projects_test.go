@@ -1,8 +1,7 @@
-package main
+package api
 
 import (
 	"encoding/json"
-	"github.com/deferpanic/dpcli/middleware"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -44,7 +43,7 @@ func TestProjectsNew(t *testing.T) {
 
 	go http.Serve(l, mux)
 
-	cli = middleware.NewCLIImplementation("token")
+	Cli = NewCliImplementation("token")
 
 	projects := &Projects{}
 

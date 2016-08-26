@@ -1,10 +1,10 @@
-package main
+package api
 
 var (
-	// APIVersion is the version of this CLI
+	// APIVersion is the version of this Cli
 	APIVersion = "v0.1"
 
-	// APIBase is the base url that cli requests goto
+	// APIBase is the base url that Cli requests goto
 	APIBase = "https://deferpanic.net/" + APIVersion
 
 	// imageURL is the url for image management

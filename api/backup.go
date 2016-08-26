@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"encoding/json"
@@ -29,11 +29,11 @@ func (backups *Backups) Save(name string, domain string) {
 		log.Println(err)
 		os.Exit(1)
 	}
-	response, err := cli.Postit(b, savebackupURL)
+	response, err := Cli.Postit(b, savebackupURL)
 	if err != nil {
-		log.Println(redBold(response))
+		log.Println(RedBold(response))
 	} else {
-		log.Println(greenBold(response))
+		log.Println(GreenBold(response))
 	}
 }
 
@@ -49,19 +49,19 @@ func (backups *Backups) Restore(name string, domain string) {
 		os.Exit(1)
 	}
 
-	response, err := cli.Postit(b, restorebackupURL)
+	response, err := Cli.Postit(b, restorebackupURL)
 	if err != nil {
-		log.Println(redBold(response))
+		log.Println(RedBold(response))
 	} else {
-		log.Println(greenBold(response))
+		log.Println(GreenBold(response))
 	}
 }
 
 func (backups *Backups) List() {
-	response, err := cli.Postit(nil, listbackupsURL)
+	response, err := Cli.Postit(nil, listbackupsURL)
 	if err != nil {
-		log.Println(redBold(response))
+		log.Println(RedBold(response))
 	} else {
-		log.Println(greenBold(response))
+		log.Println(GreenBold(response))
 	}
 }
