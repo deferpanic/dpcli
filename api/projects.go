@@ -196,6 +196,7 @@ type ManifestVolume struct {
 type ManifestProcess struct {
 	Memory  int
 	Kernel  string
+	Hash    string
 	Cmdline string
 	Env     string
 	Volumes []ManifestVolume
