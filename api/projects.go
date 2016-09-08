@@ -194,12 +194,13 @@ type ManifestVolume struct {
 }
 
 type ManifestProcess struct {
-	Memory  int
-	Kernel  string
-	Hash    string
-	Cmdline string
-	Env     string
-	Volumes []ManifestVolume
+	Memory    int
+	Kernel    string
+	Multiboot bool
+	Hash      string
+	Cmdline   string
+	Env       string
+	Volumes   []ManifestVolume
 }
 
 type Manifest struct {
