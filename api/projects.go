@@ -209,24 +209,26 @@ type Manifest struct {
 
 // Manifest is a json representation for your project
 // useful for running things locally
-func (projects *Projects) Manifest(name string) {
+func (projects *Projects) Manifest(name string) error {
 	m := Manifest{}
 	err := Cli.GetJSON(APIBase+"/projects/manifest/"+name, &m)
 	if err != nil {
 		fmt.Println(RedBold(err.Error()))
-		return
+		return err
 	}
 
 	// dupey-dupe
 	js, err := json.Marshal(m)
 	if err != nil {
 		fmt.Println(RedBold(err.Error()))
-		return
+		return err
 	}
 
 	err = ioutil.WriteFile(name+".manifest", js, 0644)
 	if err != nil {
 		fmt.Println(RedBold(err.Error()))
+		return err
 	}
 
+	return nil
 }
