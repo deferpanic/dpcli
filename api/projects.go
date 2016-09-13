@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -152,7 +153,6 @@ func (projects *Projects) Log(name string) {
 
 // Download a project root image
 func (projects *Projects) Download(name string) {
-
 	image := &Image{}
 	image.Name = name
 	b, err := json.Marshal(image)
@@ -162,6 +162,20 @@ func (projects *Projects) Download(name string) {
 	}
 
 	err = Cli.GrabFile(b, imageURL+"/get", name)
+	if err != nil {
+		fmt.Println(RedBold(err.Error()))
+	} else {
+		fmt.Println(GreenBold("file saved"))
+	}
+
+}
+
+// DownloadCommunity downloads a community kernel by project name and
+// user name
+// the project that holds this kernel must be public
+func (projects *Projects) DownloadCommunity(name string, user string) {
+
+	err := Cli.GrabFile(nil, APIBase+"/kernels/download/"+user+"/"+name, name)
 	if err != nil {
 		fmt.Println(RedBold(err.Error()))
 	} else {
@@ -222,6 +236,10 @@ func (projects *Projects) Manifest(name string) error {
 	if err != nil {
 		fmt.Println(RedBold(err.Error()))
 		return err
+	}
+
+	if strings.Contains(name, "/") {
+		name = strings.Replace(name, "/", "_", -1)
 	}
 
 	err = ioutil.WriteFile(name+".manifest", js, 0644)

@@ -148,7 +148,9 @@ func (c *CliImplementation) PostJSON(b []byte, url string, iface interface{}) (e
 	}()
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(b))
+
 	req.Header.Set("DP-APIToken", c.Token)
+
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
