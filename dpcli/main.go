@@ -39,6 +39,11 @@ var (
 	projectsManifestCommand = projectsCommand.Command("manifest", "Project manifest.")
 	projectsManifestName    = projectsManifestCommand.Arg("name", "Project name.").Required().String()
 
+	usersCommand        = app.Command("users", "Users.")
+	usersCreateCommand  = usersCommand.Command("create", "Create a new user.")
+	usersCreateEmail    = usersCreateCommand.Arg("email", "Email.").Required().String()
+	usersCreatePassword = usersCreateCommand.Arg("password", "Password.").Required().String()
+
 	instancesCommand    = app.Command("instances", "Instances.")
 	instancesNewCommand = instancesCommand.Command("new", "Create a new instance.")
 	instancesNewName    = instancesNewCommand.Arg("name", "Project name.").Required().String()
@@ -154,7 +159,11 @@ func main() {
 
 	kingpin.Version("0.0.1")
 
-	setToken()
+	if (len(os.Args) > 1) && (os.Args[1] == "users" && os.Args[2] == "create") {
+		api.Cli = api.NewCliImplementation("")
+	} else {
+		setToken()
+	}
 
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
 	case "version":
@@ -177,6 +186,9 @@ func main() {
 	case "projects log":
 		projects := &api.Projects{}
 		projects.Log(*projectsLogName)
+	case "users create":
+		users := &api.Users{}
+		users.Create(*usersCreateEmail, *usersCreatePassword)
 	case "instances scaleup":
 		instances := &api.Instances{}
 		instances.ScaleUp(*instancesScaleUpName)

@@ -5,9 +5,17 @@ Website: https://deferpanic.com
 
 [![wercker status](https://app.wercker.com/status/44ace461901cac92c53e919de5d7e5e2/s/master "wercker status")](https://app.wercker.com/project/bykey/44ace461901cac92c53e919de5d7e5e2)
 
+## Quick Start:
+
+This will create an account for you and auto-log you in through the API:
+
+```
+./dpcli users create joe@bob.com password
+```
+
 ## Authentication:
 
-You'll need an account so go sign up at https://deferpanic.net/signup .
+You'll need an account so go sign up at https://deferpanic.net/signup if you haven't created it through the API.
 Then you can find your API token @ https://deferpanic.net/home/settings.
 
 You can either pass your token in with the -token flag or you maybe
