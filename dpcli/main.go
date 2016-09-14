@@ -176,7 +176,7 @@ func main() {
 		projects.Delete(*projectsDeleteName)
 	case "projects download":
 		projects := &api.Projects{}
-		projects.Download(*projectsDownloadName)
+		projects.Download(*projectsDownloadName, ".")
 	case "projects list":
 		projects := &api.Projects{}
 		projects.List()

@@ -212,6 +212,10 @@ func (c *CliImplementation) GrabFile(b []byte, url string, fname string) (err er
 	fmt.Println("\033[1;32msaving download " + sz + " bytes to " + fname + "\033[0m")
 
 	out, err := os.Create(fname)
+	if err != nil {
+		log.Println(err)
+	}
+
 	defer out.Close()
 
 	_, err = io.Copy(out, resp.Body)

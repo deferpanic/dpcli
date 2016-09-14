@@ -83,7 +83,7 @@ dpcli projects log myproject
 ### Download image
 
 ```
-./dpcli projects download myproject
+./dpcli projects download myproject .
 ```
 
 ### Download manifest
