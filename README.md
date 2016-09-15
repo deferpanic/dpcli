@@ -10,7 +10,7 @@ Website: https://deferpanic.com
 This will create an account for you and auto-log you in through the API:
 
 ```
-./dpcli users create joe@bob.com password
+./dpcli users create joe@bob.com joebob password
 ```
 
 ## Authentication:
