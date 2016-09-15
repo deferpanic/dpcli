@@ -12,6 +12,7 @@ type Users struct{}
 
 type User struct {
 	Email    string
+	Username string
 	Password string
 }
 
@@ -21,10 +22,11 @@ type UsersResponse struct {
 }
 
 // Create creates a new user and returns the token
-func (users *Users) Create(email string, password string) {
+func (users *Users) Create(email string, username string, password string) {
 
 	user := &User{}
 	user.Email = email
+	user.Username = username
 	user.Password = password
 
 	b, err := json.Marshal(user)

@@ -42,6 +42,7 @@ var (
 	usersCommand        = app.Command("users", "Users.")
 	usersCreateCommand  = usersCommand.Command("create", "Create a new user.")
 	usersCreateEmail    = usersCreateCommand.Arg("email", "Email.").Required().String()
+	usersCreateUsername = usersCreateCommand.Arg("username", "Username.").Required().String()
 	usersCreatePassword = usersCreateCommand.Arg("password", "Password.").Required().String()
 
 	instancesCommand    = app.Command("instances", "Instances.")
@@ -139,7 +140,10 @@ var (
 func setToken() {
 	dat, err := ioutil.ReadFile(os.Getenv("HOME") + "/.dprc")
 	if err != nil {
-		fmt.Println(api.RedBold("you can stick your token in ~/.dprc"))
+		fmt.Println(api.RedBold("Have an account yet?\n" +
+			"If so you can stick your token in ~/.dprc.\n" +
+			"Otherwise signup via:\n\n\tdpcli users create my@email.com username password\n"))
+
 	}
 	dtoken := string(dat)
 
@@ -188,7 +192,7 @@ func main() {
 		projects.Log(*projectsLogName)
 	case "users create":
 		users := &api.Users{}
-		users.Create(*usersCreateEmail, *usersCreatePassword)
+		users.Create(*usersCreateEmail, *usersCreateUsername, *usersCreatePassword)
 	case "instances scaleup":
 		instances := &api.Instances{}
 		instances.ScaleUp(*instancesScaleUpName)
