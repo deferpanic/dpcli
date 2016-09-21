@@ -132,6 +132,10 @@ var (
 	addonsAvailableCommand = addonsCommand.Command("available", "List available addons.")
 	addonsListCommand      = addonsCommand.Command("list", "List provisioned addons.")
 
+	searchCommand      = app.Command("search", "Search for a project")
+	searchCommandName  = searchCommand.Arg("description", "Description").Required().String()
+	searchCommandStars = searchCommand.Arg("stars", "Star Count").Int()
+
 	status = app.Command("status", "Show Status.")
 )
 
@@ -282,6 +286,13 @@ func main() {
 	case "addons list":
 		addons := &api.Addons{}
 		addons.List()
+	case "search":
+		search := &api.Search{}
+		if *searchCommandStars != 0 {
+			search.FindWithStars(*searchCommandName, *searchCommandStars)
+		} else {
+			search.Find(*searchCommandName)
+		}
 	case "status":
 		status := &api.Status{}
 		status.Show()
