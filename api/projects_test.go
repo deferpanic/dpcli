@@ -27,7 +27,11 @@ func TestProjectsNew(t *testing.T) {
 			t.Error("wrong project name")
 		}
 
-		if i.Source != "https://github.com/vsukhin/phprump" {
+		if i.Compiler != "rumprun" {
+			t.Error("wrong compiler name")
+		}
+
+		if i.Source != "https://github.com/deferpanic/php_example" {
 			t.Error("wrong project name")
 		}
 
@@ -47,6 +51,6 @@ func TestProjectsNew(t *testing.T) {
 
 	projects := &Projects{}
 
-	projects.New("bob", "php", "https://github.com/vsukhin/phprump", "")
+	projects.New("bob", "php", "rumprun", "https://github.com/deferpanic/php_example", "")
 
 }

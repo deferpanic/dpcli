@@ -15,11 +15,12 @@ import (
 type Projects struct{}
 
 // New creates a new project
-func (projects *Projects) New(name string, language string, source string, script string) {
+func (projects *Projects) New(name string, language string, compiler string, source string, script string) {
 
 	image := &Image{}
 	image.Name = name
 	image.Language = language
+	image.Compiler = compiler
 	image.MakeBin = true
 	image.Source = source
 	image.SystemVolumes = true
@@ -132,23 +133,20 @@ func (projects *Projects) List() {
 
 }
 
-// Log shows the log output for your project
+type ProjectLogResponse struct {
+	Error string
+	Body  string
+}
+
+// Log shows the latest build log for your project by name
 func (projects *Projects) Log(name string) {
-	image := &Image{}
-
-	image.Name = name
-	b, err := json.Marshal(image)
+	plr := ProjectLogResponse{}
+	err := Cli.GetJSON(APIBase+"/builds/"+name+"/latest.json", &plr)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	response, err := Cli.Postit(b, APIBase+"/image/makelog")
-	if err != nil {
-		fmt.Println(RedBold(response))
+		fmt.Println(RedBold(err.Error()))
 	} else {
-		fmt.Println(GreenBold(response))
+		fmt.Println(GreenBold(plr.Body))
 	}
-
 }
 
 // Download a project root image

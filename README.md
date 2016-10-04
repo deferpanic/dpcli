@@ -35,7 +35,9 @@ Example if using the token flag:
 - [Resources](#user-content-resources)
 - [Addons](#user-content-addons)
 - [Languages](#user-content-languages)
- 
+- [Compilers](#user-content-compilers)
+- [Builds](#user-content-builds)
+
 ## Dependencies:
 ```
 go get gopkg.in/alecthomas/kingpin.v2
@@ -52,7 +54,7 @@ cd dpcli && go build && go install
 
 ### Create from Repository
 ```
-dpcli projects new myproject php https://github.com/deferpanic/php_example
+dpcli projects new myproject rumprun php https://github.com/deferpanic/php_example
 ```
 
 ### Create from Image Binary
@@ -240,6 +242,34 @@ Back it up
 
 ```
 ./dpcli languages
+```
+
+## Compilers
+
+### List
+
+```
+./dpcli compilers
+```
+
+## Builds
+
+### List
+
+```
+./dpcli builds list projectId
+```
+
+### Latest
+
+```
+./dpcli builds latest projectId
+```
+
+### Show
+
+```
+./dpcli builds show buildId
 ```
 
 ## Resources

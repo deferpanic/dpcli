@@ -21,6 +21,7 @@ var (
 	projectsNewCommand  = projectsCommand.Command("new", "Create a new project.")
 	projectsNewName     = projectsNewCommand.Arg("name", "Project name.").Required().String()
 	projectsNewLanguage = projectsNewCommand.Arg("language", "Project language.").Required().String()
+	projectsNewCompiler = projectsNewCommand.Arg("compiler", "Project compiler.").Required().String()
 	projectsNewSource   = projectsNewCommand.Arg("source", "Project source.").Required().String()
 	projectsNewScript   = projectsNewCommand.Arg("script", "Project script.").String()
 
@@ -33,7 +34,7 @@ var (
 	projectsUploadBinary    = projectsUploadCommand.Arg("binary", "Image binary path.").Required().String()
 
 	projectsListCommand = projectsCommand.Command("list", "List Projects.")
-	projectsLogCommand  = projectsCommand.Command("log", "View Project Build Log")
+	projectsLogCommand  = projectsCommand.Command("log", "View Latest Project Build Log")
 	projectsLogName     = projectsLogCommand.Arg("name", "Project name.").Required().String()
 
 	projectsManifestCommand = projectsCommand.Command("manifest", "Project manifest.")
@@ -116,6 +117,7 @@ var (
 	backupsListCommand = backupsCommand.Command("list", "List available backups")
 
 	languagesCommand = app.Command("languages", "Languages.")
+	compilersCommand = app.Command("compilers", "Compilers.")
 
 	resourcesCommand    = app.Command("resources", "Resources.")
 	resourcesNewCommand = resourcesCommand.Command("new", "Add a resource.")
@@ -178,7 +180,7 @@ func main() {
 		fmt.Println("0.0.1")
 	case "projects new":
 		projects := &api.Projects{}
-		projects.New(*projectsNewName, *projectsNewLanguage, *projectsNewSource, *projectsNewScript)
+		projects.New(*projectsNewName, *projectsNewLanguage, *projectsNewCompiler, *projectsNewSource, *projectsNewScript)
 	case "projects delete":
 		projects := &api.Projects{}
 		projects.Delete(*projectsDeleteName)
@@ -267,6 +269,9 @@ func main() {
 	case "languages":
 		languages := &api.Languages{}
 		languages.List()
+	case "compilers":
+		compilers := &api.Compilers{}
+		compilers.List()
 	case "resources available":
 		resources := &api.Resources{}
 		resources.Available()
