@@ -54,7 +54,7 @@ cd dpcli && go build && go install
 
 ### Create from Repository
 ```
-dpcli projects new myproject rumprun php https://github.com/deferpanic/php_example
+dpcli projects new myproject php rumprun https://github.com/deferpanic/php_example
 ```
 
 ### Create from Image Binary
