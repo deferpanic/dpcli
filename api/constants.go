@@ -22,9 +22,6 @@ var (
 	// putURL is the url to upload rumprun image binary
 	putURL = imageURL + "/put"
 
-	// languagesURL is the url to view system languages
-	languagesURL = systemURL + "/languages"
-
 	// builtinsURL is the url to view system builtins
 	builtinsURL = systemURL + "/builtins"
 

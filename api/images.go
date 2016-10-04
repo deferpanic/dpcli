@@ -6,6 +6,7 @@ type Image struct {
 	Source        string `json:"Source"`
 	Addon         string `json:"Addon"`
 	Script        string `json:"Script"`
+	Compiler      string `json:"Compiler"`
 	Language      string `json:"Language"`
 	Count         int    `json:"Count"`
 	Force         bool   `json:"Force"`
