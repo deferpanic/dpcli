@@ -8,6 +8,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 var (
@@ -162,6 +163,7 @@ func setToken() {
 		os.Exit(1)
 	}
 
+	dtoken = strings.TrimSpace(dtoken)
 	api.Cli = api.NewCliImplementation(dtoken)
 }
 
