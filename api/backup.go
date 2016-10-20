@@ -7,13 +7,13 @@ import (
 )
 
 var (
-	// savebackupURL is the url to save a backup for running rumprun image
+	// savebackupURL is the url to save a backup for a project
 	savebackupURL = backupURL + "/save"
 
-	// restorebackupURL is the url to restore a backup for running rumprun image
+	// restorebackupURL is the url to restore a backup for a project
 	restorebackupURL = backupURL + "/restore"
 
-	// listbackupsURL is the url to list all rumprun image backups
+	// listbackupsURL is the url to list all project backups
 	listbackupsURL = backupURL + "/list"
 )
 

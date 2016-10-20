@@ -16,12 +16,12 @@ var _ CliInterface = &CliImplementation{}
 
 var Cli *CliImplementation
 
-// CliInterface is the interface for making requests to the deferpanic rumprun api
+// CliInterface is the interface for making requests to the deferpanic api
 type CliInterface interface {
 	Postit(b []byte, url string) (result string, err error)
 }
 
-// CliImplementation is the base struct for making requests to the deferpanic rumprun api
+// CliImplementation is the base struct for making requests to the deferpanic api
 type CliImplementation struct {
 	Token string
 }
@@ -31,7 +31,7 @@ const (
 	httpTooManyRequests = 429
 )
 
-// NewCliImplementation instantiates and returns a new deferpanic rumprun cli
+// NewCliImplementation instantiates and returns a new deferpanic API cli
 func NewCliImplementation(token string) *CliImplementation {
 	cli := &CliImplementation{
 		Token: token,

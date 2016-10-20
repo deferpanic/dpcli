@@ -19,7 +19,7 @@ var (
 	// systemURL is the url for system management
 	systemURL = APIBase + "/system"
 
-	// putURL is the url to upload rumprun image binary
+	// putURL is the url to upload an image binary
 	putURL = imageURL + "/put"
 
 	// builtinsURL is the url to view system builtins

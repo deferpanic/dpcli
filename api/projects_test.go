@@ -27,6 +27,10 @@ func TestProjectsNew(t *testing.T) {
 			t.Error("wrong project name")
 		}
 
+		if i.Language != "php" {
+			t.Error("wrong language name")
+		}
+
 		if i.Compiler != "rumprun" {
 			t.Error("wrong compiler name")
 		}
