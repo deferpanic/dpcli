@@ -36,23 +36,22 @@ var (
 	// URL is the url for volume management
 	volumeURL = APIBase + "/volume"
 
-	// newvolumeURL is the url to add a volume for rumprun image
+	// newvolumeURL is the url to add a volume for the project
 	newvolumeURL = volumeURL + "/new"
 
-	// removevolumeURL is the url to remove a volume from rumprun image
+	// removevolumeURL is the url to remove a volume from the project
 	removevolumeURL = volumeURL + "/remove"
 
-	// connectvolumeURL is the url to connect a volume to rumprun image
+	// connectvolumeURL is the url to connect a volume to the project
 	connectvolumeURL = volumeURL + "/connect"
 
-	// disconnectvolumeURL is the url to disconnect a volume from
-	// rumprun image
+	// disconnectvolumeURL is the url to disconnect a volume from the project
 	disconnectvolumeURL = volumeURL + "/disconnect"
 
-	// listvolumesURL is the url to list all rumprun image volumes
+	// listvolumesURL is the url to list all project volumes
 	listvolumesURL = volumeURL + "/list"
 
-	// putvolumeURL is the url to upload rumprun image volume
+	// putvolumeURL is the url to upload a project volume
 	putvolumeURL = volumeURL + "/put"
 )
 

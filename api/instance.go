@@ -10,22 +10,23 @@ import (
 )
 
 var (
-	// scaleupURL is the url to scale up execution of rumprun image
+	// scaleupURL is the url to add another instance of a project
 	scaleupURL = instanceURL + "/scaleup"
 
-	// scaledownURL is the url to scale down execution of rumprun image
+	// scaledownURL is the url to scale down a project
+	// this will currently scale down every instance
 	scaledownURL = instanceURL + "/scaledown"
 
-	// runlogURL is the url to view execution log of rumprun image
+	// runlogURL is the url to view the log of a running project
 	runlogURL = instanceURL + "/log"
 
-	// showURL is the url to show running rumprun images
+	// showURL is the url to list the instances
 	showURL = instanceURL + "/show"
 
-	// pauseURL is the url to stop existing rumprun image
+	// pauseURL is the url to stop a running project
 	pauseURL = instanceURL + "/pause"
 
-	// resumeURL is the url to start existing rumprun image
+	// resumeURL is the url to start a project
 	resumeURL = instanceURL + "/resume"
 )
 
