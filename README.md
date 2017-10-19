@@ -15,8 +15,8 @@ This will create an account for you and auto-log you in through the API:
 
 ## Authentication:
 
-You'll need an account so go sign up at https://deferpanic.net/signup if you haven't created it through the API.
-Then you can find your API token @ https://deferpanic.net/home/settings.
+You'll need an account so go sign up at https://deferpanic.com/signup if you haven't created it through the API.
+Then you can find your API token @ https://deferpanic.com/home/settings.
 
 You can either pass your token in with the -token flag or you maybe
 stick it in ~/.dprc.
@@ -104,7 +104,7 @@ dpcli projects log myproject
 
 ### Log of Individual Instance
 ```
-./dpcli instances log gregory-jennifer.deferpanic.net
+./dpcli instances log gregory-jennifer.deferpanic.com
 ```
 
 ### List all Instances
@@ -122,13 +122,13 @@ dpcli projects log myproject
 ### Pause
 
 ```
-./dpcli instances pause gregory-jennifer.deferpanic.net
+./dpcli instances pause gregory-jennifer.deferpanic.com
 ```
 
 ### Resume
 
 ```
-./dpcli instances resume gregory-jennifer.deferpanic.net
+./dpcli instances resume gregory-jennifer.deferpanic.com
 ```
 
 ### ScaleUp
@@ -140,7 +140,7 @@ dpcli projects log myproject
 ### ScaleDown
 
 ```
-./dpcli instances scaledown myproject gregory-jennifer.deferpanic.net
+./dpcli instances scaledown myproject gregory-jennifer.deferpanic.com
 ```
 
 ## Volumes
@@ -148,7 +148,7 @@ dpcli projects log myproject
 ### List By Domain
 
 ```
-./dpcli volumes list --domain=stephen-anna.deferpanic.net
+./dpcli volumes list --domain=stephen-anna.deferpanic.com
 ```
 
 ### List by Image Name
@@ -164,7 +164,7 @@ Note: To download a volume you currently need to pause the instance.
 
 Pause the instance
 ```
-./dpcli instances pause my_cname.deferpanic.net
+./dpcli instances pause my_cname.deferpanic.com
 ```
 
 ```
@@ -188,7 +188,7 @@ Pause the instance
 ### Attach
 
 ```
-./dpcli ips attach 1.2.3.4 stephen-anna.deferpanic.net
+./dpcli ips attach 1.2.3.4 stephen-anna.deferpanic.com
 ```
 
 ### Detach
@@ -210,24 +210,24 @@ Pause the instance
 Pause the instance
 (Live Backups coming soon.)
 ```
-./dpcli instances pause gregory-jennifer.deferpanic.net
+./dpcli instances pause gregory-jennifer.deferpanic.com
 ```
 
 Back it up
 ```
-./dpcli backups save myproject gregory-jennifer.deferpanic.net
+./dpcli backups save myproject gregory-jennifer.deferpanic.com
 ```
 
 ### Restore
 
 Pause the instance
 ```
-./dpcli instances pause gregory-jennifer.deferpanic.net
+./dpcli instances pause gregory-jennifer.deferpanic.com
 ```
 
 Back it up
 ```
-./dpcli backups restore myproject gregory-jennifer.deferpanic.net
+./dpcli backups restore myproject gregory-jennifer.deferpanic.com
 ```
 
 ### List
