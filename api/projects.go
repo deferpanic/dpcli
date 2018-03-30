@@ -150,36 +150,32 @@ func (projects *Projects) Log(name string) {
 }
 
 // Download a project root image
-func (projects *Projects) Download(name string, path string) {
+func (projects *Projects) Download(name string, path string) error {
 	image := &Image{}
 	image.Name = name
+
 	b, err := json.Marshal(image)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	err = Cli.GrabFile(b, imageURL+"/get", path)
-	if err != nil {
-		fmt.Println(RedBold(err.Error()))
-	} else {
-		fmt.Println(GreenBold("file saved"))
+	if err = Cli.GrabFile(b, imageURL+"/get", path); err != nil {
+		return err
 	}
 
+	return nil
 }
 
 // DownloadCommunity downloads a community kernel by project name and
 // user name
 // the project that holds this kernel must be public
-func (projects *Projects) DownloadCommunity(name string, user string, path string) {
-
-	err := Cli.GrabFile(nil, APIBase+"/kernels/download/"+user+"/"+name, path)
-	if err != nil {
-		fmt.Println(RedBold(err.Error()))
-	} else {
-		fmt.Println(GreenBold("file saved"))
+func (projects *Projects) DownloadCommunity(name string, user string, path string) error {
+	if err := Cli.GrabFile(nil, APIBase+"/kernels/download/"+user+"/"+name, path); err != nil {
+		return err
 	}
 
+	return nil
 }
 
 // Upload uploads a project
@@ -247,4 +243,17 @@ func (projects *Projects) Manifest(name string) error {
 	}
 
 	return nil
+}
+
+// Temporary stuff for `virgo` refactoring only
+//
+func LoadManifest(name string) (Manifest, error) {
+	m := Manifest{}
+
+	err := Cli.GetJSON(APIBase+"/projects/manifest/"+name, &m)
+	if err != nil {
+		return Manifest{}, err
+	}
+
+	return m, err
 }
