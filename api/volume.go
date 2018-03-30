@@ -177,13 +177,11 @@ func (volumes *Volumes) Detach(name string, domain string) {
 
 // Downloads a volume by id
 // FIXME
-func (volumes *Volumes) Download(id int) {
-
-	err := Cli.GrabFile(nil, volumeURL+"/get/"+strconv.Itoa(id), "vol"+strconv.Itoa(id))
+func (volumes *Volumes) Download(id int, dst string) error {
+	err := Cli.GrabFile(nil, volumeURL+"/get/"+strconv.Itoa(id), dst)
 	if err != nil {
-		fmt.Println(RedBold(err.Error()))
-	} else {
-		fmt.Println(GreenBold("file saved"))
+		return err
 	}
 
+	return nil
 }
