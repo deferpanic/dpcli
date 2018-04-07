@@ -8,6 +8,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 	"io/ioutil"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -257,7 +258,7 @@ func main() {
 		volumes.Detach(*volumesAttachName, *volumesAttachDomain)
 	case "volumes download":
 		volumes := &api.Volumes{}
-		volumes.Download(*volumesDownloadID)
+		volumes.Download(*volumesDownloadID, "vol"+strconv.Itoa(*volumesDownloadID))
 	case "volumes upload":
 	case "backups list":
 		backups := &api.Backups{}
